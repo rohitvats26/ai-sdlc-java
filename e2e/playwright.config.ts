@@ -4,10 +4,14 @@ export default defineConfig({
   testDir: './tests',
   workers: 1,
   retries: process.env.CI ? 1 : 0,
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: [['list'], ['html', { open: 'never' }], ['json', { outputFile: 'results/e2e-results.json' }]],
   use: {
     baseURL: 'http://localhost:5000',
     trace: 'on-first-retry',
+    headless: false,
+    launchOptions: {
+      slowMo: 1000,
+    },
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {

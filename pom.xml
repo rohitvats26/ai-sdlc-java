@@ -39,7 +39,8 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
 
-      <!-- Mutation testing: mvn test-compile org.pitest:pitest-maven:mutationCoverage -->
+      <!-- Mutation testing. Use: python scripts/pit.py before   (then)   python scripts/pit.py after
+           Plain command: mvn test-compile org.pitest:pitest-maven:mutationCoverage  (report: target/pit-reports) -->
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
@@ -55,13 +56,18 @@
           <targetClasses>
             <param>com.example.invoiceapp.domain.*</param>
           </targetClasses>
+          <!-- Only the fast unit tests in the domain package: running the Spring tests for every mutant is slow and fragile. -->
           <targetTests>
-            <param>com.example.invoiceapp.*</param>
+            <param>com.example.invoiceapp.domain.*</param>
           </targetTests>
           <outputFormats>
             <param>HTML</param>
             <param>XML</param>
           </outputFormats>
+          <!-- Fixed report folder (target/pit-reports) so scripts can always find mutations.xml. -->
+          <timestampedReports>false</timestampedReports>
+          <threads>2</threads>
+          <failWhenNoMutations>false</failWhenNoMutations>
           <mutationThreshold>0</mutationThreshold>
         </configuration>
       </plugin>
