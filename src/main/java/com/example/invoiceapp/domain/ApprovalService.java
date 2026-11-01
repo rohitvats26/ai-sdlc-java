@@ -1,5 +1,6 @@
 package com.example.invoiceapp.domain;
 
+import java.time.Clock;
 import java.time.Instant;
 
 /**
@@ -9,9 +10,15 @@ public class ApprovalService {
 
     private final InvoiceRepository repository;
     private final Object approvalLock = new Object();
+    private final Clock clock;
 
     public ApprovalService(InvoiceRepository repository) {
+        this(repository, Clock.systemUTC());
+    }
+
+    ApprovalService(InvoiceRepository repository, Clock clock) {
         this.repository = repository;
+        this.clock = clock;
     }
 
     public Invoice submit(String invoiceId) {
@@ -31,33 +38,37 @@ public class ApprovalService {
         synchronized (approvalLock) {
             Invoice invoice = find(invoiceId);
             ensurePending(invoice);
-            ApprovalPolicy.ensureMayApprove(invoiceId, invoice.getAmount(), approver);
+            ApprovalPolicy.ensureMayApprove(invoiceId, invoice.getAmount(), approver, invoice.getApprovals());
 
             String username = approver.username().strip();
-            Instant approvedAt = Instant.now();
+            Instant approvedAt = clock.instant();
             invoice.addApproval(new ApprovalRecord(username, approver.role().label(), approvedAt));
-            invoice.setStatus(InvoiceStatus.APPROVED);
-            invoice.setDecidedBy(username);
-            invoice.setDecidedAt(approvedAt);
+            if (invoice.getApprovalsRequired() == invoice.getApprovalsRecorded()) {
+                invoice.setStatus(InvoiceStatus.APPROVED);
+                invoice.setDecidedBy(username);
+                invoice.setDecidedAt(approvedAt);
+            }
             repository.update(invoice);
             return invoice;
         }
     }
 
     public Invoice reject(String invoiceId, String approver, String reason) {
-        if (reason == null || reason.isBlank()) {
-            throw new IllegalArgumentException("A reason is required to reject an invoice.");
+        synchronized (approvalLock) {
+            if (reason == null || reason.isBlank()) {
+                throw new IllegalArgumentException("A reason is required to reject an invoice.");
+            }
+
+            Invoice invoice = find(invoiceId);
+            ensurePending(invoice);
+
+            invoice.setStatus(InvoiceStatus.REJECTED);
+            invoice.setDecidedBy(approver);
+            invoice.setDecidedAt(clock.instant());
+            invoice.setDecisionNote(reason);
+            repository.update(invoice);
+            return invoice;
         }
-
-        Invoice invoice = find(invoiceId);
-        ensurePending(invoice);
-
-        invoice.setStatus(InvoiceStatus.REJECTED);
-        invoice.setDecidedBy(approver);
-        invoice.setDecidedAt(Instant.now());
-        invoice.setDecisionNote(reason);
-        repository.update(invoice);
-        return invoice;
     }
 
     private Invoice find(String invoiceId) {

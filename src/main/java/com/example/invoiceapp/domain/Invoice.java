@@ -43,6 +43,10 @@ public class Invoice {
     public String getDecisionNote() { return decisionNote; }
     public void setDecisionNote(String decisionNote) { this.decisionNote = decisionNote; }
     public List<ApprovalRecord> getApprovals() { return List.copyOf(approvals); }
+    public int getApprovalsRequired() {
+        return amount != null && amount.compareTo(new BigDecimal("500000")) > 0 ? 2 : 1;
+    }
+    public int getApprovalsRecorded() { return approvals.size(); }
 
     public void addApproval(ApprovalRecord approval) {
         approvals.add(approval);

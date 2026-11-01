@@ -22,7 +22,7 @@ class ApprovalPolicyTest {
         "DIRECTOR, 50000, true",
         "DIRECTOR, 50000.01, true",
         "DIRECTOR, 500000, true",
-        "DIRECTOR, 500000.01, false"
+        "DIRECTOR, 500000.01, true"
     })
     void policyEnforcesSingleApproverLimits(String role, String amount, boolean allowed) {
         Approver approver = new Approver("demo.user", ApproverRole.valueOf(role));

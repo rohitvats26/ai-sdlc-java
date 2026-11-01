@@ -10,16 +10,16 @@ _This page is generated from `docs/ai-log/ai-log.jsonl` by `python scripts/ai_lo
 
 | | |
 | --- | --- |
-| AI interactions | **2** (plus 0 automatic commit records) |
+| AI interactions | **3** (plus 0 automatic commit records) |
 | Tools and models | GitHub Copilot · gpt-4o-mini-2024-07-18 |
-| Modes | agent × 2 |
-| Agent types | built-in × 2 |
+| Modes | agent × 3 |
+| Agent types | built-in × 3 |
 | Skills used | ai-log, approval-rules, approval-tests, openspec-propose |
 | Sub-agents used | none |
 | MCP tools used | none |
-| Reviewed by a human | **0 of 2** interactions |
-| With checking evidence (tests or validation) | **2 of 2** interactions |
-| Outcomes | partially completed × 2 |
+| Reviewed by a human | **0 of 3** interactions |
+| With checking evidence (tests or validation) | **3 of 3** interactions |
+| Outcomes | partially completed × 3 |
 
 ## Timeline
 
@@ -27,6 +27,7 @@ _This page is generated from `docs/ai-log/ai-log.jsonl` by `python scripts/ai_lo
 | --- | --- | --- | --- | --- | --- |
 | 1 | 2026-11-01 08:22 | spec | Step 1. Check the baseline, then write the OpenSpec change for approv… | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 | 2 | 2026-11-01 08:32 | implement | Step 2. Manager and Director limits only (task group 1) | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
+| 3 | 2026-11-01 08:41 | implement | Step 3. Two distinct approvers above 500,000 (task group 2) | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 
 ## Interactions in detail
 
@@ -173,5 +174,78 @@ Follow skill `approval-tests`. Cover: the four boundaries (50,000 / 50,000.01 / 
 - **Files changed (14):** `README.md`, `src/main/java/com/example/invoiceapp/api/ApiExceptionHandler.java`, `src/main/java/com/example/invoiceapp/api/ApprovalsController.java`, `src/main/java/com/example/invoiceapp/domain/ApprovalService.java`, `src/main/java/com/example/invoiceapp/domain/Invoice.java`, `src/main/resources/application.yml`, `src/test/java/com/example/invoiceapp/api/InvoiceApiTest.java`, `src/test/java/com/example/invoiceapp/domain/ApprovalServiceTest.java` and 6 more
 - **Unit tests:** 43 of 43 passed, 0 failed, 0 errors (report time 2026-11-01T08:33:04Z)
 - **Ran:** `mvn -q test` finished with exit code 0
+- **Command recorded:** `openspec validate add-approval-limits-by-role --strict`
+
+### 3. Step 3. Two distinct approvers above 500,000 (task group 2)  🟡 partially completed
+
+| | |
+| --- | --- |
+| **When** | 2026-11-01 08:41:53 UTC (step: implement) |
+| **Tool, model, mode** | GitHub Copilot · gpt-4o-mini-2024-07-18 (auto-detected from the Copilot Chat log) · agent |
+| **Agent** | Agent (built-in) |
+| **Skills · sub-agents · MCP** | ai-log, approval-rules, approval-tests · none · none |
+| **Result** | applied → partially completed |
+
+**Prompt 1:** `/3-two-approver` (from `.github/prompts/3-two-approver.prompt.md`)
+
+<details><summary>Show the full prompt text</summary>
+
+~~~~text
+Goal: task group 2 of the spec only.
+
+## Before you start (stop and tell me if a check fails)
+Step 2 is committed, `mvn test` is green, and `design.md` records the decision about the first approver above 500,000. Follow it.
+
+## Read only these
+The spec scenarios for the two-approver rule, `design.md`, `AGENTS.md`, and the domain and test code from step 2.
+
+## Skills (open the file if your Copilot does not load it for you)
+- `approval-rules` (`.github/skills/approval-rules/SKILL.md`): rules, design and traps
+- `approval-tests` (`.github/skills/approval-tests/SKILL.md`): refusal and concurrency test recipes
+
+## Plan first (in the chat)
+The cases you will cover and the classes you will change.
+
+## Build
+- Above 500,000 the invoice stays `PENDING_APPROVAL` after the first approval and records it. The second approver must be a Director. The same user never counts twice (trimmed, ignoring case). Only the second valid approval sets Approved, `decidedBy` and `decidedAt`.
+- Expose approvals recorded and required in the JSON. Run approve and reject under one lock so two requests cannot both pass the checks.
+- Update `README.md`: the approval limits section now includes the two-approver rule and which accounts are first and second approver.
+
+## Tests
+First approval leaves it pending with one record; a second, different Director completes it with the history in order; a Manager as second approver is refused ("second approver must be a Director"); the same user twice is refused, including `Demo.Director` and `  demo.director `; every refusal proves the invoice is unchanged (snapshot); an approved invoice cannot be approved again; simultaneous requests by one user record exactly one approval. The concurrency test must fail without the lock (recipe in skill `approval-tests`).
+
+## Rules
+Same as step 2. If a test still fails after 3 attempts, stop and tell me.
+
+## Done when
+`mvn test` passes; a table (spec requirement of group 2 to its test); you briefly removed the lock, saw the concurrency test fail, and put the lock back (say so). Do NOT change the UI or the spec.
+
+## Finish (in this order; details in "Finish protocol" in `.github/copilot-instructions.md`)
+1. Log: `python scripts/ai_log.py add --prompt-ref 3-two-approver --action "<one per real thing you did>" --tool-used "<only tools that ran>" --run-tests "mvn -q test"`
+2. Commit: `git add -A`, then `git commit -m "feat: require two distinct approvers above 500,000" -m "Why: very large invoices need a second Director, and one person must never count twice"`. Adjust the wording to what you really changed. Skip if only `docs/ai-log/` changed.
+3. Tell me the commit hash and message.
+~~~~
+
+</details>
+
+**Instructions followed:** `.github/prompts/3-two-approver.prompt.md`
+
+**What the AI did**
+- Implemented two-Director approval above 500,000, preserving pending status and unset decision fields after the first approval and completing on the second.
+- Added normalized identity checks, required/recorded approval counters, refusal-safe service behavior, and shared locking for approval and rejection.
+- Updated README to document the first and second Director demo accounts.
+- Added unit and API coverage for the approval sequence, Manager refusals as first/second approver, duplicate normalized user refusal, already-approved invoices, JSON counters/history, and same-user concurrency.
+- Verified the concurrency test fails without the approval lock (16 requests accepted) and passes after restoring the lock.
+- Ran the full suite: 50 tests passed; strict OpenSpec validation and git diff --check passed.
+
+**My review (human oversight)**
+- ⚠ Not reviewed yet. Add it: `python scripts/ai_log.py annotate last --human-correction "..." --validation "..." --outcome successful`
+
+**Evidence**
+- **Commit at logging time:** `9f9c929` on `feature/approval-limits-by-role`, "feat: enforce manager and director limits"
+- **Files changed (7):** `README.md`, `src/main/java/com/example/invoiceapp/domain/ApprovalPolicy.java`, `src/main/java/com/example/invoiceapp/domain/ApprovalService.java`, `src/main/java/com/example/invoiceapp/domain/Invoice.java`, `src/test/java/com/example/invoiceapp/api/InvoiceApiTest.java`, `src/test/java/com/example/invoiceapp/domain/ApprovalPolicyTest.java`, `src/test/java/com/example/invoiceapp/domain/ApprovalServiceTest.java`
+- **Unit tests:** 50 of 50 passed, 0 failed, 0 errors (report time 2026-11-01T08:42:11Z)
+- **Ran:** `mvn -q test` finished with exit code 0
+- **Command recorded:** `mvn -q -Dtest=ApprovalServiceTest#approve_concurrentSameUserRecordsExactlyOneApproval test (without lock; failed as expected with 16 accepted)`
 - **Command recorded:** `openspec validate add-approval-limits-by-role --strict`
 

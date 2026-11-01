@@ -73,4 +73,44 @@ class InvoiceApiTest {
                 .andExpect(jsonPath("$.error").value(org.hamcrest.Matchers.containsString("Manager or Director")))
                 .andExpect(jsonPath("$.error").value(org.hamcrest.Matchers.containsString("INV-1002")));
     }
+
+    @Test
+    void highValueInvoiceRequiresTwoDirectorsAndExposesApprovalCounts() throws Exception {
+        String managerToken = tokenFor("demo.manager");
+        String directorToken = tokenFor("demo.director");
+        String secondDirectorToken = tokenFor("demo.director2");
+
+        String created = mvc.perform(post("/api/invoices")
+                        .header("Authorization", "Bearer " + managerToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"customerName\":\"Two Director API Test\",\"amount\":500000.01}"))
+                .andExpect(status().isCreated())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String invoiceId = created.replaceAll(".*\"id\":\"([^\"]+)\".*", "$1");
+
+        mvc.perform(post("/api/invoices/{id}/submit", invoiceId)
+                        .header("Authorization", "Bearer " + managerToken))
+                .andExpect(status().isOk());
+
+        mvc.perform(post("/api/approvals/{id}/approve", invoiceId)
+                        .header("Authorization", "Bearer " + directorToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("PendingApproval"))
+                .andExpect(jsonPath("$.approvalsRequired").value(2))
+                .andExpect(jsonPath("$.approvalsRecorded").value(1))
+                .andExpect(jsonPath("$.decidedBy").value(org.hamcrest.Matchers.nullValue()))
+                .andExpect(jsonPath("$.approvals[0].username").value("demo.director"));
+
+        mvc.perform(post("/api/approvals/{id}/approve", invoiceId)
+                        .header("Authorization", "Bearer " + secondDirectorToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("Approved"))
+                .andExpect(jsonPath("$.approvalsRequired").value(2))
+                .andExpect(jsonPath("$.approvalsRecorded").value(2))
+                .andExpect(jsonPath("$.decidedBy").value("demo.director2"))
+                .andExpect(jsonPath("$.approvals[0].username").value("demo.director"))
+                .andExpect(jsonPath("$.approvals[1].username").value("demo.director2"));
+    }
 }

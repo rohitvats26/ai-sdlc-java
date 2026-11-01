@@ -18,8 +18,8 @@ All demo accounts use the password `ChangeMe123!`. These are local demo credenti
 | `demo.approver` | Approver | Reject invoices; cannot approve under the role limits | Baseline |
 | `demo.admin` | Admin | Reject and delete invoices; cannot approve under the role limits | Baseline |
 | `demo.manager` | Manager | Approve invoices up to 50,000 | Step 2 |
-| `demo.director` | Director | Approve invoices up to 500,000 | Step 2 |
-| `demo.director2` | Director | Approve invoices up to 500,000 | Step 2 |
+| `demo.director` | Director | First approver above 500,000; also approves up to 500,000 | Step 2 |
+| `demo.director2` | Director | Second approver above 500,000 | Step 2 account; step 3 flow |
 
 Keep this table in step with `application.yml`: if you add, rename or remove an account, update it in the same commit.
 
@@ -37,7 +37,7 @@ Amounts use `BigDecimal` and are compared exactly.
 | above 50,000, up to and including 500,000 | Director only | 1 |
 | above 500,000 | two different users; the second must be a Director | 2 |
 
-- In step 2, amounts above 500,000 are refused until the two-Director approval flow is added in step 3.
+- Above 500,000, `demo.director` can record the first approval and `demo.director2` can complete it. Both approvals must be by different Directors.
 - A refused approval returns a clear reason (HTTP 403 with `{ "error": ... }`) and changes nothing on the invoice.
 
 
