@@ -1,0 +1,25 @@
+PIT before: 53 of 72 mutants killed = 73.6 percent
+survived: 8, not covered by any test: 11, timed out: 0, non-viable (ignored): 0
+commit: b20ef04   saved: 2026-11-01 14:14
+formula: killed (incl. timed out) / all mutants except non-viable. The PIT HTML report (index.html in this folder) is authoritative.
+
+Mutants to kill with new tests (class.method:line, mutator, what changed):
+- ApprovalService.approve:51 VoidMethodCallMutator - removed call to com/example/invoiceapp/domain/InvoiceRepository::update [SURVIVED]
+- ApprovalService.reject:63 VoidMethodCallMutator - removed call to com/example/invoiceapp/domain/ApprovalService::ensurePending [SURVIVED]
+- ApprovalService.reject:66 VoidMethodCallMutator - removed call to com/example/invoiceapp/domain/Invoice::setDecidedBy [SURVIVED]
+- ApprovalService.reject:67 VoidMethodCallMutator - removed call to com/example/invoiceapp/domain/Invoice::setDecidedAt [SURVIVED]
+- ApprovalService.reject:69 VoidMethodCallMutator - removed call to com/example/invoiceapp/domain/InvoiceRepository::update [SURVIVED]
+- ApprovalService.submit:33 VoidMethodCallMutator - removed call to com/example/invoiceapp/domain/InvoiceRepository::update [SURVIVED]
+- ApprovalPolicy.ensureHighValueApproval:54 ConditionalsBoundaryMutator - changed conditional boundary [SURVIVED]
+- Invoice.getCreatedAt:37 NullReturnValsMutator - replaced return value with null for com/example/invoiceapp/domain/Invoice::getCreatedAt [NO_COVERAGE]
+- Invoice.getCustomerName:31 EmptyObjectReturnValsMutator - replaced return value with "" for com/example/invoiceapp/domain/Invoice::getCustomerName [NO_COVERAGE]
+- InvoiceStatus.label:20 EmptyObjectReturnValsMutator - replaced return value with "" for com/example/invoiceapp/domain/InvoiceStatus::label [SURVIVED]
+- InvoiceStatus.normalise:38 EmptyObjectReturnValsMutator - replaced return value with "" for com/example/invoiceapp/domain/InvoiceStatus::normalise [NO_COVERAGE]
+- InvoiceStatus.parse:25 NegateConditionalsMutator - negated conditional [NO_COVERAGE]
+- InvoiceStatus.parse:30 NegateConditionalsMutator - negated conditional [NO_COVERAGE]
+- InvoiceStatus.parse:30 NegateConditionalsMutator - negated conditional [NO_COVERAGE]
+- InvoiceStatus.parse:31 EmptyObjectReturnValsMutator - replaced return value with Optional.empty for com/example/invoiceapp/domain/InvoiceStatus::parse [NO_COVERAGE]
+- ApproverRole.from:21 NullReturnValsMutator - replaced return value with null for com/example/invoiceapp/domain/ApproverRole::from [NO_COVERAGE]
+- ApproverRole.lambda$from$0:22 NegateConditionalsMutator - negated conditional [NO_COVERAGE]
+- ApproverRole.lambda$from$0:22 NegateConditionalsMutator - negated conditional [NO_COVERAGE]
+- ApproverRole.lambda$from$0:22 BooleanTrueReturnValsMutator - replaced boolean return with true for com/example/invoiceapp/domain/ApproverRole::lambda$from$0 [NO_COVERAGE]

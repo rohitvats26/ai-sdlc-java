@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>ApprovalService.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.example.invoiceapp.domain;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.time.Clock;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.time.Instant;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Moves invoices through their lifecycle. Approval checks and mutations are serialized.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class ApprovalService {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final InvoiceRepository repository;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private final Object approvalLock = new Object();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final Clock clock;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public ApprovalService(InvoiceRepository repository) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this(repository, Clock.systemUTC());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    ApprovalService(InvoiceRepository repository, Clock clock) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.repository = repository;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.clock = clock;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Invoice submit(String invoiceId) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Invoice invoice = find(invoiceId);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_27'/>
+27
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_27'>1</a>
+<span>
+
+1. submit : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (invoice.getStatus() != InvoiceStatus.DRAFT) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new InvalidInvoiceStateException(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    &#34;Invoice %s is %s; only drafts can be submitted.&#34;.formatted(invoiceId, invoice.getStatus().label()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_32'/>
+32
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_32'>1</a>
+<span>
+
+1. submit : removed call to com/example/invoiceapp/domain/Invoice::setStatus &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        invoice.setStatus(InvoiceStatus.PENDING_APPROVAL);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_33'/>
+33
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_33'>1</a>
+<span>
+
+1. submit : removed call to com/example/invoiceapp/domain/InvoiceRepository::update &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        repository.update(invoice);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_34'/>
+34
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_34'>1</a>
+<span>
+
+1. submit : replaced return value with null for com/example/invoiceapp/domain/ApprovalService::submit &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return invoice;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Invoice approve(String invoiceId, Approver approver) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        synchronized (approvalLock) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            Invoice invoice = find(invoiceId);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_40'/>
+40
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_40'>1</a>
+<span>
+
+1. approve : removed call to com/example/invoiceapp/domain/ApprovalService::ensurePending &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            ensurePending(invoice);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_41'/>
+41
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_41'>1</a>
+<span>
+
+1. approve : removed call to com/example/invoiceapp/domain/ApprovalPolicy::ensureMayApprove &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            ApprovalPolicy.ensureMayApprove(invoiceId, invoice.getAmount(), approver, invoice.getApprovals());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            String username = approver.username().strip();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            Instant approvedAt = clock.instant();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_45'/>
+45
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_45'>1</a>
+<span>
+
+1. approve : removed call to com/example/invoiceapp/domain/Invoice::addApproval &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            invoice.addApproval(new ApprovalRecord(username, approver.role().label(), approvedAt));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_46'/>
+46
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_46'>1</a>
+<span>
+
+1. approve : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (invoice.getApprovalsRequired() == invoice.getApprovalsRecorded()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_47'/>
+47
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_47'>1</a>
+<span>
+
+1. approve : removed call to com/example/invoiceapp/domain/Invoice::setStatus &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                invoice.setStatus(InvoiceStatus.APPROVED);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_48'/>
+48
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_48'>1</a>
+<span>
+
+1. approve : removed call to com/example/invoiceapp/domain/Invoice::setDecidedBy &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                invoice.setDecidedBy(username);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_49'/>
+49
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_49'>1</a>
+<span>
+
+1. approve : removed call to com/example/invoiceapp/domain/Invoice::setDecidedAt &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                invoice.setDecidedAt(approvedAt);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_51'/>
+51
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_51'>1</a>
+<span>
+
+1. approve : removed call to com/example/invoiceapp/domain/InvoiceRepository::update &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            repository.update(invoice);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_52'/>
+52
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_52'>1</a>
+<span>
+
+1. approve : replaced return value with null for com/example/invoiceapp/domain/ApprovalService::approve &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return invoice;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Invoice reject(String invoiceId, String approver, String reason) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        synchronized (approvalLock) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_58'/>
+58
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_58'>2</a>
+<span>
+
+1. reject : negated conditional &rarr; KILLED<br/>
+
+2. reject : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (reason == null || reason.isBlank()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                throw new IllegalArgumentException(&#34;A reason is required to reject an invoice.&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_62'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            Invoice invoice = find(invoiceId);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_63'/>
+63
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_63'>1</a>
+<span>
+
+1. reject : removed call to com/example/invoiceapp/domain/ApprovalService::ensurePending &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            ensurePending(invoice);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_65'/>
+65
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_65'>1</a>
+<span>
+
+1. reject : removed call to com/example/invoiceapp/domain/Invoice::setStatus &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            invoice.setStatus(InvoiceStatus.REJECTED);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_66'/>
+66
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_66'>1</a>
+<span>
+
+1. reject : removed call to com/example/invoiceapp/domain/Invoice::setDecidedBy &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            invoice.setDecidedBy(approver);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_67'/>
+67
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_67'>1</a>
+<span>
+
+1. reject : removed call to com/example/invoiceapp/domain/Invoice::setDecidedAt &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            invoice.setDecidedAt(clock.instant());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_68'/>
+68
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_68'>1</a>
+<span>
+
+1. reject : removed call to com/example/invoiceapp/domain/Invoice::setDecisionNote &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            invoice.setDecisionNote(reason);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_69'/>
+69
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_69'>1</a>
+<span>
+
+1. reject : removed call to com/example/invoiceapp/domain/InvoiceRepository::update &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            repository.update(invoice);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_70'/>
+70
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_70'>1</a>
+<span>
+
+1. reject : replaced return value with null for com/example/invoiceapp/domain/ApprovalService::reject &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return invoice;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_71'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_73'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_74'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private Invoice find(String invoiceId) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_75'/>
+75
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_75'>1</a>
+<span>
+
+1. find : replaced return value with null for com/example/invoiceapp/domain/ApprovalService::find &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return repository.getById(invoiceId)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_76'/>
+76
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_76'>1</a>
+<span>
+
+1. lambda$0 : replaced return value with null for com/example/invoiceapp/domain/ApprovalService::lambda$0 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                .orElseThrow(() -&#62; new InvoiceNotFoundException(&#34;Invoice %s was not found.&#34;.formatted(invoiceId)));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_79'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static void ensurePending(Invoice invoice) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_80'/>
+80
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_80'>1</a>
+<span>
+
+1. ensurePending : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (invoice.getStatus() != InvoiceStatus.PENDING_APPROVAL) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_81'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new InvalidInvoiceStateException(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_82'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    &#34;Invoice %s is %s; only pending invoices can be decided.&#34;.formatted(invoice.getId(), invoice.getStatus().label()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_83'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_84'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_27'>27</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_27'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>submit<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:submit_movesDraftToPendingApproval()]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_32'>32</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_32'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>submit<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:submit_movesDraftToPendingApproval()]</span></span> removed call to com/example/invoiceapp/domain/Invoice::setStatus &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_33'>33</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_33'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>submit<br/><b>Killed by : </b>none</span></span> removed call to com/example/invoiceapp/domain/InvoiceRepository::update &rarr; SURVIVED</span>
+<a title="Click to view covering tests" class="view-covered-by-tests" onClick="document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=submit,-methodDesc=(Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[48],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display=(document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=submit,-methodDesc=(Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[48],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display == 'block')?'none':'block';">Covering tests</a>
+<div class="covered-tests" id="MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=submit,-methodDesc=(Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[48],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]" style="display:none;">Covered by tests:
+<ul>
+<li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:submit_movesDraftToPendingApproval()]</li> 
+</ul>
+</div></div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_34'>34</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_34'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>submit<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:submit_movesDraftToPendingApproval()]</span></span> replaced return value with null for com/example/invoiceapp/domain/ApprovalService::submit &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_40'>40</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_40'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>approve<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_rejectsInvoiceThatIsStillADraft()]</span></span> removed call to com/example/invoiceapp/domain/ApprovalService::ensurePending &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_41'>41</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_41'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>approve<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_rejectsInvalidAmountWithoutMutation(java.lang.String)]/[test-template-invocation:#1]</span></span> removed call to com/example/invoiceapp/domain/ApprovalPolicy::ensureMayApprove &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_45'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>approve<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_refusesAlreadyApprovedInvoiceWithoutMutation()]</span></span> removed call to com/example/invoiceapp/domain/Invoice::addApproval &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_46'>46</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_46'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>approve<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_refusesAlreadyApprovedInvoiceWithoutMutation()]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_47'>47</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_47'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>approve<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_refusesAlreadyApprovedInvoiceWithoutMutation()]</span></span> removed call to com/example/invoiceapp/domain/Invoice::setStatus &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_48'>48</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_48'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>approve<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#2]</span></span> removed call to com/example/invoiceapp/domain/Invoice::setDecidedBy &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_49'>49</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_49'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>approve<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#2]</span></span> removed call to com/example/invoiceapp/domain/Invoice::setDecidedAt &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_51'>51</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_51'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>approve<br/><b>Killed by : </b>none</span></span> removed call to com/example/invoiceapp/domain/InvoiceRepository::update &rarr; SURVIVED</span>
+<a title="Click to view covering tests" class="view-covered-by-tests" onClick="document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=approve,-methodDesc=(Ljava/lang/String;Lcom/example/invoiceapp/domain/Approver;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[79],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display=(document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=approve,-methodDesc=(Ljava/lang/String;Lcom/example/invoiceapp/domain/Approver;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[79],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display == 'block')?'none':'block';">Covering tests</a>
+<div class="covered-tests" id="MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=approve,-methodDesc=(Ljava/lang/String;Lcom/example/invoiceapp/domain/Approver;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[79],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]" style="display:none;">Covered by tests:
+<ul>
+<li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_refusesAlreadyApprovedInvoiceWithoutMutation()]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_managerCannotBeSecondHighValueApprover()]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_sameDirectorCannotApproveTwiceAfterNormalization()]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#9]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#6]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#7]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#2]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_setsDecisionAndApprovalHistory()]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#8]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#10]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#1]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_highValueInvoiceRequiresTwoDistinctDirectors()]</li> <li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_concurrentSameUserRecordsExactlyOneApproval()]</li> 
+</ul>
+</div></div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_52'>52</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_52'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>approve<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#9]</span></span> replaced return value with null for com/example/invoiceapp/domain/ApprovalService::approve &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_58'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>reject<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_requiresAReason()]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>reject<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_recordsReasonAndApprover()]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_63'>63</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_63'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>reject<br/><b>Killed by : </b>none</span></span> removed call to com/example/invoiceapp/domain/ApprovalService::ensurePending &rarr; SURVIVED</span>
+<a title="Click to view covering tests" class="view-covered-by-tests" onClick="document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[33],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display=(document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[33],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display == 'block')?'none':'block';">Covering tests</a>
+<div class="covered-tests" id="MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[33],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]" style="display:none;">Covered by tests:
+<ul>
+<li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_recordsReasonAndApprover()]</li> 
+</ul>
+</div></div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_65'>65</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_65'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>reject<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_recordsReasonAndApprover()]</span></span> removed call to com/example/invoiceapp/domain/Invoice::setStatus &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_66'>66</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_66'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>reject<br/><b>Killed by : </b>none</span></span> removed call to com/example/invoiceapp/domain/Invoice::setDecidedBy &rarr; SURVIVED</span>
+<a title="Click to view covering tests" class="view-covered-by-tests" onClick="document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[43],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display=(document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[43],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display == 'block')?'none':'block';">Covering tests</a>
+<div class="covered-tests" id="MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[43],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]" style="display:none;">Covered by tests:
+<ul>
+<li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_recordsReasonAndApprover()]</li> 
+</ul>
+</div></div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_67'>67</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_67'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>reject<br/><b>Killed by : </b>none</span></span> removed call to com/example/invoiceapp/domain/Invoice::setDecidedAt &rarr; SURVIVED</span>
+<a title="Click to view covering tests" class="view-covered-by-tests" onClick="document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[50],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display=(document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[50],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display == 'block')?'none':'block';">Covering tests</a>
+<div class="covered-tests" id="MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[50],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]" style="display:none;">Covered by tests:
+<ul>
+<li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_recordsReasonAndApprover()]</li> 
+</ul>
+</div></div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_68'>68</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_68'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>reject<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_recordsReasonAndApprover()]</span></span> removed call to com/example/invoiceapp/domain/Invoice::setDecisionNote &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_69'>69</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_69'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>reject<br/><b>Killed by : </b>none</span></span> removed call to com/example/invoiceapp/domain/InvoiceRepository::update &rarr; SURVIVED</span>
+<a title="Click to view covering tests" class="view-covered-by-tests" onClick="document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[61],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display=(document.getElementById('MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[61],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display == 'block')?'none':'block';">Covering tests</a>
+<div class="covered-tests" id="MutationIdentifier-[location=Location-[clazz=com.example.invoiceapp.domain.ApprovalService,-method=reject,-methodDesc=(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/example/invoiceapp/domain/Invoice;],-indexes=[61],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]" style="display:none;">Covered by tests:
+<ul>
+<li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_recordsReasonAndApprover()]</li> 
+</ul>
+</div></div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_70'>70</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_70'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>reject<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_recordsReasonAndApprover()]</span></span> replaced return value with null for com/example/invoiceapp/domain/ApprovalService::reject &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_75'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>find<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:submit_movesDraftToPendingApproval()]</span></span> replaced return value with null for com/example/invoiceapp/domain/ApprovalService::find &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_76'>76</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_76'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$0<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_throwsWhenInvoiceDoesNotExist()]</span></span> replaced return value with null for com/example/invoiceapp/domain/ApprovalService::lambda$0 &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7ab1ad9_80'>80</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7ab1ad9_80'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensurePending<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_rejectsInvalidAmountWithoutMutation(java.lang.String)]/[test-template-invocation:#1]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_refusesAlreadyApprovedInvoiceWithoutMutation()] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#2] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#9] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#6] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#7] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_setsDecisionAndApprovalHistory()] (7 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#8] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#1] (6 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_highValueInvoiceRequiresTwoDistinctDirectors()] (9 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_recordsReasonAndApprover()] (14 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_managerCannotBeSecondHighValueApprover()] (3 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_sameDirectorCannotApproveTwiceAfterNormalization()] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#10] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_concurrentSameUserRecordsExactlyOneApproval()] (68 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:submit_movesDraftToPendingApproval()] (0 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_throwsWhenInvoiceDoesNotExist()] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:submit_rejectsInvoiceThatIsNotADraft()] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_rejectsInvalidAmountWithoutMutation(java.lang.String)]/[test-template-invocation:#1] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_rejectsInvalidAmountWithoutMutation(java.lang.String)]/[test-template-invocation:#2] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_rejectsMissingAmountWithoutMutation()] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_rejectsInvoiceThatIsStillADraft()] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_rejectsUnknownRoleWithoutMutation()] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_managerCannotBeFirstHighValueApprover()] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#4] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#5] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#3] (4 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_rejectsBlankApproverWithoutMutation()] (47 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:reject_requiresAReason()] (2 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.17.0
+
+</body>
+</html>

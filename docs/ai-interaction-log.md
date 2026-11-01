@@ -10,16 +10,16 @@ _This page is generated from `docs/ai-log/ai-log.jsonl` by `python scripts/ai_lo
 
 | | |
 | --- | --- |
-| AI interactions | **3** (plus 0 automatic commit records) |
+| AI interactions | **4** (plus 0 automatic commit records) |
 | Tools and models | GitHub Copilot · gpt-4o-mini-2024-07-18 |
-| Modes | agent × 3 |
-| Agent types | built-in × 3 |
+| Modes | agent × 4 |
+| Agent types | built-in × 4 |
 | Skills used | ai-log, approval-rules, approval-tests, openspec-propose |
 | Sub-agents used | none |
 | MCP tools used | none |
-| Reviewed by a human | **0 of 3** interactions |
-| With checking evidence (tests or validation) | **3 of 3** interactions |
-| Outcomes | partially completed × 3 |
+| Reviewed by a human | **0 of 4** interactions |
+| With checking evidence (tests or validation) | **4 of 4** interactions |
+| Outcomes | partially completed × 4 |
 
 ## Timeline
 
@@ -28,6 +28,7 @@ _This page is generated from `docs/ai-log/ai-log.jsonl` by `python scripts/ai_lo
 | 1 | 2026-11-01 08:22 | spec | Step 1. Check the baseline, then write the OpenSpec change for approv… | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 | 2 | 2026-11-01 08:32 | implement | Step 2. Manager and Director limits only (task group 1) | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 | 3 | 2026-11-01 08:41 | implement | Step 3. Two distinct approvers above 500,000 (task group 2) | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
+| 4 | 2026-11-01 08:46 | test | Step 4. Review the tests and strengthen them using PIT mutation testi… | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 
 ## Interactions in detail
 
@@ -248,4 +249,74 @@ Same as step 2. If a test still fails after 3 attempts, stop and tell me.
 - **Ran:** `mvn -q test` finished with exit code 0
 - **Command recorded:** `mvn -q -Dtest=ApprovalServiceTest#approve_concurrentSameUserRecordsExactlyOneApproval test (without lock; failed as expected with 16 accepted)`
 - **Command recorded:** `openspec validate add-approval-limits-by-role --strict`
+
+### 4. Step 4. Review the tests and strengthen them using PIT mutation testing  🟡 partially completed
+
+| | |
+| --- | --- |
+| **When** | 2026-11-01 08:46:34 UTC (step: test) |
+| **Tool, model, mode** | GitHub Copilot · gpt-4o-mini-2024-07-18 (auto-detected from the Copilot Chat log) · agent |
+| **Agent** | Agent (built-in) |
+| **Skills · sub-agents · MCP** | ai-log, approval-tests · none · none |
+| **Result** | applied → partially completed |
+
+**Prompt 1:** `/4-strengthen-tests` (from `.github/prompts/4-strengthen-tests.prompt.md`)
+
+<details><summary>Show the full prompt text</summary>
+
+~~~~text
+Goal: find tests that would still pass if a rule were wrong, and fix them. Tests only.
+
+## Before you start (stop and tell me if a check fails)
+Steps 2 and 3 are committed and `mvn test` is green (PIT needs green tests). Do not change any test until the "before" run in step 1 below is saved.
+
+## Read only these
+`src/test/java/**`, the domain classes PIT mutates, and `docs/mutation/before.txt` once it exists.
+
+## Skills (open the file if your Copilot does not load it for you)
+- `approval-tests` (`.github/skills/approval-tests/SKILL.md`): what to add for each surviving mutant
+
+## Do, in order
+1. Run `python scripts/pit.py before`. It runs PIT, saves the report in `docs/mutation/before/`, writes `docs/mutation/before.txt` (score and the list of surviving mutants), updates `docs/mutation-testing.md` and the "Mutation scores" block in `ASSIGNMENT.md`. If it fails, stop and show me the error. If step 4 was already done earlier, run `python scripts/pit.py before --at <commit of step 3>` instead: it rebuilds "before" from that commit.
+2. Read `docs/mutation/before.txt` and the tests. Give a table of weak tests: name, what is weak (exception type only, no unchanged-state check, no message check, missing boundary), what to add.
+3. For each surviving mutant add the missing assertion or test. If a mutant is equivalent (cannot change behaviour), say so and skip it; do not chase 100 percent.
+4. Run `python scripts/pit.py after`. It saves `docs/mutation/after/` and `after.txt`, updates the table in `docs/mutation-testing.md` and writes both scores as text into `ASSIGNMENT.md`.
+5. Run `python scripts/pit.py check`. It must say the "Mutation scores" block in `ASSIGNMENT.md` shows Before and After and matches `docs/mutation/`. If it does not, run `python scripts/pit.py sync` and check again.
+
+## Rules
+- Never type, estimate or copy a score by hand: only `pit.py` writes them.
+- Change tests only; if you find a production bug, report it and stop. Never delete or loosen a test.
+- If `pit.py` says "before already exists", do not use `--force`: tell me.
+
+## Done when
+`mvn test` passes; `docs/mutation/before.txt`, `docs/mutation/after.txt` exist and the "Mutation scores" block in `ASSIGNMENT.md` shows both scores (Before, After and the change) and `python scripts/pit.py check` passes. Reply: both scores (copied from the script output), mutants killed per new test, mutants still alive and why.
+
+## Finish (in this order; details in "Finish protocol" in `.github/copilot-instructions.md`)
+1. Log: `python scripts/ai_log.py add --prompt-ref 4-strengthen-tests --action "<one per real thing you did>" --tool-used "<only tools that ran>" --run-tests "mvn -q test" --command-run "python scripts/pit.py before" --command-run "python scripts/pit.py after"`
+2. Commit: `git add -A`, then `git commit -m "test: strengthen approval tests" -m "Why: the mutation run showed tests that would still pass if a rule were wrong"`. Adjust the wording to what you really changed. Skip if only `docs/ai-log/` changed.
+3. Tell me the commit hash and message.
+~~~~
+
+</details>
+
+**Instructions followed:** `.github/prompts/4-strengthen-tests.prompt.md`
+
+**What the AI did**
+- Ran PIT before: 53 of 72 mutants killed (73.6 percent), with 8 survivors and 11 uncovered mutants.
+- Strengthened ApprovalService tests for repository updates, rejection decision fields, and refusal of non-pending invoices with unchanged state.
+- Added coverage for approval-count policy boundaries, InvoiceStatus parsing and labels, ApproverRole mapping, and Invoice accessors.
+- Ran PIT after: 72 of 72 mutants killed (100.0 percent), with no survivors or uncovered mutants.
+- Verified python scripts/pit.py check passes and the Assignment score block matches generated reports.
+
+**My review (human oversight)**
+- ⚠ Not reviewed yet. Add it: `python scripts/ai_log.py annotate last --human-correction "..." --validation "..." --outcome successful`
+
+**Evidence**
+- **Commit at logging time:** `b20ef04` on `feature/approval-limits-by-role`, "feat: require two distinct approvers above 500,000"
+- **Files changed (8):** `ASSIGNMENT.md`, `src/test/java/com/example/invoiceapp/domain/ApprovalPolicyTest.java`, `src/test/java/com/example/invoiceapp/domain/ApprovalServiceTest.java`, `docs/mutation-testing.md`, `docs/mutation/`, `src/test/java/com/example/invoiceapp/domain/ApproverRoleTest.java`, `src/test/java/com/example/invoiceapp/domain/InvoiceStatusTest.java`, `src/test/java/com/example/invoiceapp/domain/InvoiceTest.java`
+- **Unit tests:** 60 of 60 passed, 0 failed, 0 errors (report time 2026-11-01T08:46:52Z)
+- **Ran:** `mvn -q test` finished with exit code 0
+- **Command recorded:** `python scripts/pit.py before`
+- **Command recorded:** `python scripts/pit.py after`
+- **Command recorded:** `python scripts/pit.py check`
 

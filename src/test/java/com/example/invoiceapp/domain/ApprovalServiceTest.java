@@ -33,6 +33,20 @@ class ApprovalServiceTest {
         return new ApprovalService(new FakeInvoiceRepository(invoices));
     }
 
+    private static final class RecordingInvoiceRepository extends FakeInvoiceRepository {
+        private int updates;
+
+        private RecordingInvoiceRepository(Invoice... invoices) {
+            super(invoices);
+        }
+
+        @Override
+        public void update(Invoice invoice) {
+            updates++;
+            super.update(invoice);
+        }
+    }
+
     private static Approver manager() {
         return new Approver("demo.manager", ApproverRole.MANAGER);
     }
@@ -62,9 +76,11 @@ class ApprovalServiceTest {
 
     @Test
     void submit_movesDraftToPendingApproval() {
-        Invoice result = serviceFor(invoiceWith("INV-1", InvoiceStatus.DRAFT)).submit("INV-1");
+        RecordingInvoiceRepository repository = new RecordingInvoiceRepository(invoiceWith("INV-1", InvoiceStatus.DRAFT));
+        Invoice result = new ApprovalService(repository).submit("INV-1");
 
         assertThat(result.getStatus()).isEqualTo(InvoiceStatus.PENDING_APPROVAL);
+        assertThat(repository.updates).isEqualTo(1);
     }
 
     @Test
@@ -76,7 +92,9 @@ class ApprovalServiceTest {
 
     @Test
     void approve_setsDecisionAndApprovalHistory() {
-        ApprovalService service = serviceFor(invoiceWith("INV-1", InvoiceStatus.PENDING_APPROVAL));
+        RecordingInvoiceRepository repository =
+                new RecordingInvoiceRepository(invoiceWith("INV-1", InvoiceStatus.PENDING_APPROVAL));
+        ApprovalService service = new ApprovalService(repository);
 
         Invoice result = service.approve("INV-1", manager());
 
@@ -85,6 +103,7 @@ class ApprovalServiceTest {
         assertThat(result.getDecidedAt()).isNotNull();
         assertThat(result.getApprovals()).containsExactly(
                 new ApprovalRecord("demo.manager", "Manager", result.getDecidedAt()));
+        assertThat(repository.updates).isEqualTo(1);
     }
 
     @ParameterizedTest
@@ -360,12 +379,31 @@ class ApprovalServiceTest {
 
     @Test
     void reject_recordsReasonAndApprover() {
-        ApprovalService service = serviceFor(invoiceWith("INV-1", InvoiceStatus.PENDING_APPROVAL));
+        RecordingInvoiceRepository repository =
+                new RecordingInvoiceRepository(invoiceWith("INV-1", InvoiceStatus.PENDING_APPROVAL));
+        ApprovalService service = new ApprovalService(repository);
 
         Invoice result = service.reject("INV-1", "demo.approver", "Duplicate invoice");
 
         assertThat(result.getStatus()).isEqualTo(InvoiceStatus.REJECTED);
+        assertThat(result.getDecidedBy()).isEqualTo("demo.approver");
+        assertThat(result.getDecidedAt()).isNotNull();
         assertThat(result.getDecisionNote()).isEqualTo("Duplicate invoice");
+        assertThat(repository.updates).isEqualTo(1);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"DRAFT", "APPROVED", "REJECTED"})
+    void reject_refusesInvoiceThatIsNotPendingWithoutMutation(String status) {
+        Invoice invoice = invoiceWith("INV-NOT-PENDING", InvoiceStatus.valueOf(status));
+        ApprovalService service = serviceFor(invoice);
+        Snapshot before = snapshot(invoice);
+
+        assertThatThrownBy(() -> service.reject(invoice.getId(), "demo.approver", "Duplicate invoice"))
+                .isInstanceOf(InvalidInvoiceStateException.class)
+                .hasMessageContaining("INV-NOT-PENDING")
+                .hasMessageContaining("only pending invoices");
+        assertThat(snapshot(invoice)).isEqualTo(before);
     }
 
     @Test

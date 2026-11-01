@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -61,6 +63,31 @@ class ApprovalPolicyTest {
         Approver approver = new Approver("demo.manager", ApproverRole.MANAGER);
 
         assertThatCode(() -> ApprovalPolicy.ensureMayApprove("INV-4", new BigDecimal("50000.00"), approver))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void policyRejectsApprovalWhenTwoRecordsAlreadyExist() {
+        List<ApprovalRecord> approvals = List.of(
+                new ApprovalRecord("demo.director", "Director", Instant.parse("2026-01-01T00:00:00Z")),
+                new ApprovalRecord("demo.director2", "Director", Instant.parse("2026-01-02T00:00:00Z")));
+        Approver thirdDirector = new Approver("demo.director3", ApproverRole.DIRECTOR);
+
+        assertThatThrownBy(() -> ApprovalPolicy.ensureMayApprove(
+                        "INV-OVER-APPROVED", new BigDecimal("500000.01"), thirdDirector, approvals))
+                .isInstanceOf(ApprovalRejectedException.class)
+                .hasMessageContaining("INV-OVER-APPROVED")
+                .hasMessageContaining("two required Director approvals");
+    }
+
+    @Test
+    void policyAllowsDistinctDirectorAsSecondApprover() {
+        List<ApprovalRecord> approvals = List.of(
+                new ApprovalRecord("Demo.Director", "Director", Instant.parse("2026-01-01T00:00:00Z")));
+        Approver secondDirector = new Approver("demo.director2", ApproverRole.DIRECTOR);
+
+        assertThatCode(() -> ApprovalPolicy.ensureMayApprove(
+                        "INV-SECOND", new BigDecimal("500000.01"), secondDirector, approvals))
                 .doesNotThrowAnyException();
     }
 }

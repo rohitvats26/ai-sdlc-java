@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>ApprovalPolicy.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.example.invoiceapp.domain;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.math.BigDecimal;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public final class ApprovalPolicy {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private static final BigDecimal MANAGER_LIMIT = new BigDecimal(&#34;50000&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private static final BigDecimal DIRECTOR_LIMIT = new BigDecimal(&#34;500000&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    private ApprovalPolicy() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static void ensureMayApprove(String invoiceId, BigDecimal amount, Approver approver) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_14'/>
+14
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_14'>1</a>
+<span>
+
+1. ensureMayApprove : removed call to com/example/invoiceapp/domain/ApprovalPolicy::ensureMayApprove &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        ensureMayApprove(invoiceId, amount, approver, List.of());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static void ensureMayApprove(</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            String invoiceId, BigDecimal amount, Approver approver, List&#60;ApprovalRecord&#62; approvals) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_19'/>
+19
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_19'>3</a>
+<span>
+
+1. ensureMayApprove : negated conditional &rarr; KILLED<br/>
+
+2. ensureMayApprove : negated conditional &rarr; KILLED<br/>
+
+3. ensureMayApprove : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (approver == null || approver.username() == null || approver.username().isBlank()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ApprovalRejectedException(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    &#34;Invoice %s requires a valid Manager or Director username.&#34;.formatted(invoiceId));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_23'/>
+23
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_23'>3</a>
+<span>
+
+1. ensureMayApprove : negated conditional &rarr; KILLED<br/>
+
+2. ensureMayApprove : negated conditional &rarr; KILLED<br/>
+
+3. ensureMayApprove : changed conditional boundary &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (amount == null || amount.signum() &#60;= 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ApprovalRejectedException(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    &#34;Invoice %s has an invalid amount; a positive amount is required.&#34;.formatted(invoiceId));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_27'/>
+27
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_27'>2</a>
+<span>
+
+1. ensureMayApprove : negated conditional &rarr; KILLED<br/>
+
+2. ensureMayApprove : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (approver.role() == null || approver.role() == ApproverRole.UNKNOWN) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ApprovalRejectedException(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    &#34;Invoice %s with amount %s requires an approver with the Manager or Director role.&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                            .formatted(invoiceId, amount.toPlainString()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_32'/>
+32
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_32'>2</a>
+<span>
+
+1. ensureMayApprove : negated conditional &rarr; KILLED<br/>
+
+2. ensureMayApprove : changed conditional boundary &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (amount.compareTo(DIRECTOR_LIMIT) &#62; 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_33'/>
+33
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_33'>1</a>
+<span>
+
+1. ensureMayApprove : removed call to com/example/invoiceapp/domain/ApprovalPolicy::ensureHighValueApproval &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            ensureHighValueApproval(invoiceId, amount, approver, approvals);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            return;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_36'/>
+36
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_36'>3</a>
+<span>
+
+1. ensureMayApprove : negated conditional &rarr; KILLED<br/>
+
+2. ensureMayApprove : negated conditional &rarr; KILLED<br/>
+
+3. ensureMayApprove : changed conditional boundary &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (approver.role() == ApproverRole.MANAGER &#38;&#38; amount.compareTo(MANAGER_LIMIT) &#62; 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ApprovalRejectedException(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    &#34;Invoice %s with amount %s exceeds the 50,000 Manager limit; a Director is required.&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                            .formatted(invoiceId, amount.toPlainString()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static void ensureHighValueApproval(</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            String invoiceId, BigDecimal amount, Approver approver, List&#60;ApprovalRecord&#62; approvals) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_45'/>
+45
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_45'>1</a>
+<span>
+
+1. ensureHighValueApproval : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (approvals == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            throw new IllegalArgumentException(&#34;Approval history is required.&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_48'/>
+48
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_48'>1</a>
+<span>
+
+1. ensureHighValueApproval : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (approver.role() != ApproverRole.DIRECTOR) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ApprovalRejectedException(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    (&#34;Invoice %s with amount %s exceeds the 500,000 limit; two distinct Directors are required, &#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                            + &#34;and the second approver must be a Director.&#34;)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                            .formatted(invoiceId, amount.toPlainString()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_54'/>
+54
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_54'>2</a>
+<span>
+
+1. ensureHighValueApproval : negated conditional &rarr; KILLED<br/>
+
+2. ensureHighValueApproval : changed conditional boundary &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (approvals.size() &#62;= 2) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ApprovalRejectedException(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    &#34;Invoice %s with amount %s already has the two required Director approvals.&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                            .formatted(invoiceId, amount.toPlainString()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        String normalizedUsername = approver.username().strip();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        boolean alreadyApproved = approvals.stream()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_61'/>
+61
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_61'>2</a>
+<span>
+
+1. lambda$0 : replaced boolean return with true for com/example/invoiceapp/domain/ApprovalPolicy::lambda$0 &rarr; KILLED<br/>
+
+2. lambda$0 : replaced boolean return with false for com/example/invoiceapp/domain/ApprovalPolicy::lambda$0 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                .anyMatch(record -&#62; record.username().strip().equalsIgnoreCase(normalizedUsername));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_62'/>
+62
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_62'>1</a>
+<span>
+
+1. ensureHighValueApproval : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (alreadyApproved) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_63'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ApprovalRejectedException(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    (&#34;Invoice %s with amount %s exceeds the 500,000 limit and requires two distinct Directors; &#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_65'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                            + &#34;this user has already approved it.&#34;)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                            .formatted(invoiceId, amount.toPlainString()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_68'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ecdf528_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_14'>14</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_14'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyRejectsBlankUsernamesAndUnknownRoles(java.lang.String, java.lang.String)]/[test-template-invocation:#1]</span></span> removed call to com/example/invoiceapp/domain/ApprovalPolicy::ensureMayApprove &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_19'>19</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_19'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#7]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#7]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyRejectsBlankUsernamesAndUnknownRoles(java.lang.String, java.lang.String)]/[test-template-invocation:#1]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_23'>23</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_23'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#7]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyRejectsNonPositiveAmounts(java.lang.String)]/[test-template-invocation:#2]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyRejectsNonPositiveAmounts(java.lang.String)]/[test-template-invocation:#1]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_27'>27</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_27'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#7]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyRejectsBlankUsernamesAndUnknownRoles(java.lang.String, java.lang.String)]/[test-template-invocation:#2]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_32'>32</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_32'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[method:policyAcceptsScaleDifferentAmountsAtTheLimit()]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#4]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_33'>33</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_33'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#5]</span></span> removed call to com/example/invoiceapp/domain/ApprovalPolicy::ensureHighValueApproval &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_36'>36</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_36'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#8]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[method:policyAcceptsScaleDifferentAmountsAtTheLimit()]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>ensureMayApprove<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[method:policyAcceptsScaleDifferentAmountsAtTheLimit()]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_45'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureHighValueApproval<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#10]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_48'>48</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_48'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureHighValueApproval<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#10]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_54'>54</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_54'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureHighValueApproval<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#10]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ensureHighValueApproval<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[method:policyRejectsApprovalWhenTwoRecordsAlreadyExist()]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_61'>61</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_61'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$0<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[method:policyAllowsDistinctDirectorAsSecondApprover()]</span></span> replaced boolean return with true for com/example/invoiceapp/domain/ApprovalPolicy::lambda$0 &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$0<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_sameDirectorCannotApproveTwiceAfterNormalization()]</span></span> replaced boolean return with false for com/example/invoiceapp/domain/ApprovalPolicy::lambda$0 &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ecdf528_62'>62</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ecdf528_62'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ensureHighValueApproval<br/><b>Killed by : </b>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#10]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[method:policyAllowsDistinctDirectorAsSecondApprover()] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_sameDirectorCannotApproveTwiceAfterNormalization()] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_highValueInvoiceRequiresTwoDistinctDirectors()] (10 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_concurrentSameUserRecordsExactlyOneApproval()] (56 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#10] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#5] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[method:policyRejectsApprovalWhenTwoRecordsAlreadyExist()] (132 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_managerCannotBeFirstHighValueApprover()] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#5] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_managerCannotBeSecondHighValueApprover()] (3 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#10] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#7] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#8] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#6] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[method:policyAcceptsScaleDifferentAmountsAtTheLimit()] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#2] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#9] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#4] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#3] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyEnforcesSingleApproverLimits(java.lang.String, java.lang.String, boolean)]/[test-template-invocation:#1] (3 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#4] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#3] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_refusesAlreadyApprovedInvoiceWithoutMutation()] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#9] (0 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#6] (0 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#7] (0 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#8] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#2] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_enforcesRoleLimitsWithoutPartialMutation(java.lang.String, java.lang.String, boolean, java.lang.String)]/[test-template-invocation:#1] (4 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_setsDecisionAndApprovalHistory()] (11 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyRejectsBlankUsernamesAndUnknownRoles(java.lang.String, java.lang.String)]/[test-template-invocation:#1] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyRejectsNonPositiveAmounts(java.lang.String)]/[test-template-invocation:#2] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyRejectsBlankUsernamesAndUnknownRoles(java.lang.String, java.lang.String)]/[test-template-invocation:#2] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalPolicyTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalPolicyTest]/[test-template:policyRejectsNonPositiveAmounts(java.lang.String)]/[test-template-invocation:#1] (31 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_rejectsUnknownRoleWithoutMutation()] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_rejectsMissingAmountWithoutMutation()] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_rejectsInvalidAmountWithoutMutation(java.lang.String)]/[test-template-invocation:#1] (1 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[test-template:approve_rejectsInvalidAmountWithoutMutation(java.lang.String)]/[test-template-invocation:#2] (2 ms)</li><li>com.example.invoiceapp.domain.ApprovalServiceTest.[engine:junit-jupiter]/[class:com.example.invoiceapp.domain.ApprovalServiceTest]/[method:approve_rejectsBlankApproverWithoutMutation()] (42 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.17.0
+
+</body>
+</html>

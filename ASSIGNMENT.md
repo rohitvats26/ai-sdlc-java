@@ -27,14 +27,15 @@ TODO: what you built, assumptions, what Copilot got wrong and how you corrected 
 
 | Run | Mutants killed | Score | Survived | Not covered | Commit |
 | --- | --- | --- | --- | --- | --- |
-| Before | NOT GENERATED | | | | |
-| After | NOT GENERATED | | | | |
+| Before | 53 of 72 | **73.6 percent** | 8 | 11 | b20ef04 |
+| After | 72 of 72 | **100.0 percent** | 0 | 0 | b20ef04 (uncommitted changes present) |
+| **Change** | +19 | **+26.4 points** | -8 | -11 | |
 
 ```text
 Tool: PIT (pitest-maven 1.17.0), default mutators, classes in the domain package, run by scripts/pit.py
-Before: NOT GENERATED yet. Run: python scripts/pit.py before
-After:  NOT GENERATED yet. Run: python scripts/pit.py after
-Change: not available until both Before and After are generated
+Before: 53 of 72 mutants killed = 73.6 percent (8 survived, 11 not covered by any test) [commit b20ef04, saved 2026-11-01 14:14]
+After:  72 of 72 mutants killed = 100.0 percent (0 survived, 0 not covered by any test) [commit b20ef04 (uncommitted changes present), saved 2026-11-01 14:16]
+Change: +26.4 percentage points (73.6 -> 100.0 percent), +19 mutants killed, -8 survived
 ```
 
 Reports and surviving-mutant lists: `docs/mutation/` (see also `docs/mutation-testing.md`). This block is written by `scripts/pit.py`; do not retype it.
