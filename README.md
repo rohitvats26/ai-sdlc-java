@@ -2,6 +2,15 @@
 
 A small invoice approval app used for the AI in SDLC assignment. Java 17, Spring Boot 3, in-memory data, plain HTML/JS front end.
 
+Stack: Java 21 / Spring Boot 3. Spec tool: OpenSpec. AI tool: GitHub Copilot.
+
+## Project Demo & Pull Request
+
+| Description | Link |
+|---|---|
+| 🎥 Demo Video | https://drive.google.com/file/d/1h5ppywi3nC_m0GgfmvWi3NcAa7Gqc2fC/view?usp=sharing |
+| 🔀 Pull Request | https://github.com/rohitvats26/ai-sdlc-java/pull/1 |
+
 ## Run
 
 ```
