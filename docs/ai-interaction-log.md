@@ -10,16 +10,16 @@ _This page is generated from `docs/ai-log/ai-log.jsonl` by `python scripts/ai_lo
 
 | | |
 | --- | --- |
-| AI interactions | **5** (plus 0 automatic commit records) |
+| AI interactions | **6** (plus 0 automatic commit records) |
 | Tools and models | GitHub Copilot · gpt-4o-mini-2024-07-18 |
-| Modes | agent × 5 |
-| Agent types | built-in × 5 |
-| Skills used | ai-log, approval-rules, approval-tests, openspec-propose, playwright-e2e |
+| Modes | agent × 6 |
+| Agent types | built-in × 6 |
+| Skills used | ai-log, approval-rules, approval-tests, openspec-propose, playwright-e2e, review-findings |
 | Sub-agents used | none |
 | MCP tools used | none |
-| Reviewed by a human | **0 of 5** interactions |
-| With checking evidence (tests or validation) | **5 of 5** interactions |
-| Outcomes | partially completed × 5 |
+| Reviewed by a human | **0 of 6** interactions |
+| With checking evidence (tests or validation) | **6 of 6** interactions |
+| Outcomes | partially completed × 6 |
 
 ## Timeline
 
@@ -30,6 +30,7 @@ _This page is generated from `docs/ai-log/ai-log.jsonl` by `python scripts/ai_lo
 | 3 | 2026-11-01 08:41 | implement | Step 3. Two distinct approvers above 500,000 (task group 2) | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 | 4 | 2026-11-01 08:46 | test | Step 4. Review the tests and strengthen them using PIT mutation testi… | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 | 5 | 2026-11-01 08:52 | e2e | Step 5. Show approval progress in the UI and add the Playwright tests | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
+| 6 | 2026-11-01 09:00 | review | Step 6. Review the diff and write findings in a fixed JSON format. Us… | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 
 ## Interactions in detail
 
@@ -404,4 +405,69 @@ Follow skill `playwright-e2e` (page objects, role-based locators, each test crea
 - **Command recorded:** `node --check src/main/resources/static/app.js`
 - **Command recorded:** `npm install (in e2e)`
 - **Command recorded:** `git diff --check`
+
+### 6. Step 6. Review the diff and write findings in a fixed JSON format. Use a FRESH chat  🟡 partially completed
+
+| | |
+| --- | --- |
+| **When** | 2026-11-01 09:00:23 UTC (step: review) |
+| **Tool, model, mode** | GitHub Copilot · gpt-4o-mini-2024-07-18 (auto-detected from the Copilot Chat log) · agent |
+| **Agent** | Agent (built-in) |
+| **Skills · sub-agents · MCP** | ai-log, approval-rules, review-findings · none · none |
+| **Result** | applied → partially completed |
+
+**Prompt 1:** `/6-review-pr` (from `.github/prompts/6-review-pr.prompt.md`)
+
+<details><summary>Show the full prompt text</summary>
+
+~~~~text
+Review this PR against our checklist. Report findings by severity with file and line, suggest a fix for each, and say what you are unsure about.
+
+## Before you start
+You must be in a FRESH chat. If this chat contains earlier implementation work, stop and tell me to open a new one. Use `git diff <base>..HEAD` (find the base with `git log --oneline`).
+
+## Skills (open the file if your Copilot does not load it for you)
+- `review-findings` (`.github/skills/review-findings/SKILL.md`): checklist, severity, JSON format, verdicts
+- `approval-rules` (`.github/skills/approval-rules/SKILL.md`): the traps to look for
+
+## How
+- Follow skill `review-findings` (checklist, severity, what to verify). Verify each suspicion by reading or running code; at most 12 findings, no praise, no style nits.
+- Also look for what is MISSING: every spec scenario needs a test; list any that has none.
+
+## Output
+Write ONLY `docs/review/findings.json`: an array of objects with exactly these keys: `id`, `severity` (critical|high|medium|low|info), `file`, `line`, `title`, `description`, `suggested_fix`, `confidence` (high|medium|low), `unsure_about`, `verdict`, `verdict_reason`, `resolution`. Set every `verdict` to "pending". Run `python scripts/hooks/validate-findings.py docs/review/findings.json` and fix format errors.
+
+## Rules
+Do not edit source files. I set each verdict myself: fixed, dismissed (with reason) or deferred (with reason).
+
+## Done when
+The validator passes; your reply lists findings by id, severity and title.
+
+## Finish (in this order; details in "Finish protocol" in `.github/copilot-instructions.md`)
+1. Log: `python scripts/ai_log.py add --prompt-ref 6-review-pr --action "<one per real thing you did>" --tool-used "<only tools that ran>" --command-run "python scripts/hooks/validate-findings.py docs/review/findings.json"`
+2. Commit: `git add -A`, then `git commit -m "docs: add review findings" -m "Why: the diff was reviewed in a fresh chat and every finding needs a verdict"`. Adjust the wording to what you really changed. Skip if only `docs/ai-log/` changed.
+3. Tell me the commit hash and message.
+~~~~
+
+</details>
+
+**Instructions followed:** `.github/prompts/6-review-pr.prompt.md`
+
+**What the AI did**
+- Reviewed main...HEAD and created docs/review/findings.json with two verified findings
+- Ran focused approval and API tests with mvn -q -Dtest=ApprovalPolicyTest,ApprovalServiceTest,InvoiceApiTest test
+- Ran the full Java test suite with mvn -q test
+- Ran node --check src/main/resources/static/app.js
+- Listed browser tests with npx playwright test --list from e2e; did not run browser tests
+- Validated findings with python scripts/hooks/validate-findings.py docs/review/findings.json
+- Ran git diff --check; it reported existing whitespace in generated docs and mutation reports
+
+**My review (human oversight)**
+- ⚠ Not reviewed yet. Add it: `python scripts/ai_log.py annotate last --human-correction "..." --validation "..." --outcome successful`
+
+**Evidence**
+- **Commit at logging time:** `a84b0bf` on `feature/approval-limits-by-role`, "feat: show approval progress and add Playwright tests"
+- **Files changed (1):** `docs/review/`
+- **Unit tests:** 60 of 60 passed, 0 failed, 0 errors (report time 2026-11-01T09:00:01Z)
+- **Command recorded:** `python scripts/hooks/validate-findings.py docs/review/findings.json`
 
