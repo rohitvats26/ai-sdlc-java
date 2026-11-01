@@ -35,7 +35,7 @@ Amounts use `BigDecimal` and are compared exactly.
 | --- | --- | --- |
 | up to and including 50,000 | Manager or Director | 1 |
 | above 50,000, up to and including 500,000 | Director only | 1 |
-| above 500,000 | two different users; the second must be a Director | 2 |
+| above 500,000 | two distinct Directors | 2 |
 
 - Above 500,000, `demo.director` can record the first approval and `demo.director2` can complete it. Both approvals must be by different Directors.
 - A refused approval returns a clear reason (HTTP 403 with `{ "error": ... }`) and changes nothing on the invoice.

@@ -10,16 +10,16 @@ _This page is generated from `docs/ai-log/ai-log.jsonl` by `python scripts/ai_lo
 
 | | |
 | --- | --- |
-| AI interactions | **6** (plus 0 automatic commit records) |
+| AI interactions | **7** (plus 0 automatic commit records) |
 | Tools and models | GitHub Copilot · gpt-4o-mini-2024-07-18 |
-| Modes | agent × 6 |
-| Agent types | built-in × 6 |
+| Modes | agent × 7 |
+| Agent types | built-in × 7 |
 | Skills used | ai-log, approval-rules, approval-tests, openspec-propose, playwright-e2e, review-findings |
 | Sub-agents used | none |
 | MCP tools used | none |
-| Reviewed by a human | **0 of 6** interactions |
-| With checking evidence (tests or validation) | **6 of 6** interactions |
-| Outcomes | partially completed × 6 |
+| Reviewed by a human | **0 of 7** interactions |
+| With checking evidence (tests or validation) | **7 of 7** interactions |
+| Outcomes | partially completed × 7 |
 
 ## Timeline
 
@@ -31,6 +31,7 @@ _This page is generated from `docs/ai-log/ai-log.jsonl` by `python scripts/ai_lo
 | 4 | 2026-11-01 08:46 | test | Step 4. Review the tests and strengthen them using PIT mutation testi… | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 | 5 | 2026-11-01 08:52 | e2e | Step 5. Show approval progress in the UI and add the Playwright tests | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 | 6 | 2026-11-01 09:00 | review | Step 6. Review the diff and write findings in a fixed JSON format. Us… | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
+| 7 | 2026-11-01 09:04 | docs | Step 7. Fill in ASSIGNMENT.md and the PR description from real eviden… | gpt-4o-mini-2024-07-18 | 🟡 partially completed |
 
 ## Interactions in detail
 
@@ -470,4 +471,69 @@ The validator passes; your reply lists findings by id, severity and title.
 - **Files changed (1):** `docs/review/`
 - **Unit tests:** 60 of 60 passed, 0 failed, 0 errors (report time 2026-11-01T09:00:01Z)
 - **Command recorded:** `python scripts/hooks/validate-findings.py docs/review/findings.json`
+
+### 7. Step 7. Fill in ASSIGNMENT.md and the PR description from real evidence  🟡 partially completed
+
+| | |
+| --- | --- |
+| **When** | 2026-11-01 09:04:42 UTC (step: docs) |
+| **Tool, model, mode** | GitHub Copilot · gpt-4o-mini-2024-07-18 (auto-detected from the Copilot Chat log) · agent |
+| **Agent** | Agent (built-in) |
+| **Skills · sub-agents · MCP** | ai-log · none · none |
+| **Result** | applied → partially completed |
+
+**Prompt 1:** `/7-write-up` (from `.github/prompts/7-write-up.prompt.md`)
+
+<details><summary>Show the full prompt text</summary>
+
+~~~~text
+Goal: an honest write-up. Every claim needs evidence.
+
+## Before you start (stop and tell me if a check fails)
+`python scripts/hooks/validate-findings.py --final docs/review/findings.json` passes (a verdict on every finding). Then run `python scripts/evidence.py` and use its output as your facts: commits, test counts, mutation scores, findings tally, AI log summary.
+
+## Read only these
+`ASSIGNMENT.md`, `README.md`, `docs/`, `openspec/`, and the `evidence.py` output.
+
+## Do
+- Fill the traceability table in `ASSIGNMENT.md`: for each requirement, what was built, the evidence (file path, commit hash or command output) and a status (Completed, Partially completed, Not completed, Pending).
+- Do not retype the PIT scores: the "Mutation scores" block in `ASSIGNMENT.md` is written by `python scripts/pit.py`. Run `python scripts/pit.py check`: it must pass (both a Before and an After score, matching `docs/mutation/`). If it fails or either says NOT GENERATED, tell me which command to run (`before`, `after` or `sync`); do not fill it in yourself.
+- Write `docs/PULL_REQUEST.md`: summary, business-rule coverage, test results, mutation scores, AI tools used (from the AI log), the review findings table with verdicts, known limits and open assumptions.
+- Check `README.md` against the code (accounts and roles match `application.yml`, rules match what was built, test commands work) and fix any mismatch.
+
+## Rules
+Only state a result you can show. Otherwise mark it Pending. Never invent numbers, commit hashes or links; the demo video and the PR link stay Pending until I add them. Do not tidy the AI log: it records what really happened, including Copilot's mistakes. Short, plain sentences.
+
+## Done when
+No table cell is empty and every "Completed" has evidence next to it.
+
+## Finish (in this order; details in "Finish protocol" in `.github/copilot-instructions.md`)
+1. Log: `python scripts/ai_log.py add --prompt-ref 7-write-up --action "<one per real thing you did>" --tool-used "<only tools that ran>"`
+2. Commit: `git add -A`, then `git commit -m "docs: complete assignment write-up" -m "Why: the write-up maps every requirement to evidence"`. Adjust the wording to what you really changed. Skip if only `docs/ai-log/` changed.
+3. Tell me the commit hash and message.
+~~~~
+
+</details>
+
+**Instructions followed:** `.github/prompts/7-write-up.prompt.md`
+
+**What the AI did**
+- Completed ASSIGNMENT.md write-up and populated traceability with checked evidence
+- Created docs/PULL_REQUEST.md with summary, coverage, verification, AI workflow, review verdicts, and known limits
+- Corrected README approval table to state two distinct Directors above 500,000
+- Reported human-set review verdicts and flagged the unrelated F-002 rationale without changing the verdict
+- Refreshed evidence with python scripts/evidence.py
+- Verified PIT scores and final findings with python scripts/pit.py check and python scripts/hooks/validate-findings.py --final docs/review/findings.json
+- Ran git diff --check; no whitespace errors were reported for the current changes
+
+**My review (human oversight)**
+- ⚠ Not reviewed yet. Add it: `python scripts/ai_log.py annotate last --human-correction "..." --validation "..." --outcome successful`
+
+**Evidence**
+- **Commit at logging time:** `70a9662` on `feature/approval-limits-by-role`, "docs: add review findings"
+- **Files changed (4):** `ASSIGNMENT.md`, `README.md`, `docs/review/findings.json`, `docs/PULL_REQUEST.md`
+- **Unit tests:** 60 of 60 passed, 0 failed, 0 errors (report time 2026-11-01T09:00:01Z)
+- **Command recorded:** `python scripts/evidence.py`
+- **Command recorded:** `python scripts/pit.py check`
+- **Command recorded:** `python scripts/hooks/validate-findings.py --final docs/review/findings.json`
 

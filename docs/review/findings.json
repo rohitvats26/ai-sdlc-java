@@ -9,8 +9,8 @@
     "suggested_fix": "Capture the invoice state before the request, fetch it again after the 403, and assert status, amount, decidedBy, decidedAt, decisionNote, and approvals are unchanged.",
     "confidence": "high",
     "unsure_about": "The underlying service validates before mutation, but this test does not verify that behavior through the API.",
-    "verdict": "pending",
-    "verdict_reason": "",
+    "verdict": "dismissed",
+    "verdict_reason": "not required to test immutability at the API level; service tests already cover that behavior",
     "resolution": ""
   },
   {
@@ -23,8 +23,8 @@
     "suggested_fix": "Change the table entry to 'two distinct Directors' so it matches the design decision and implementation.",
     "confidence": "high",
     "unsure_about": "The explanatory bullet below the table clarifies the intended rule, but readers relying on the table may infer different authority.",
-    "verdict": "pending",
-    "verdict_reason": "",
+    "verdict": "dismissed",
+    "verdict_reason": "not required to test immutability at the API level; service tests already cover that behavior",
     "resolution": ""
   }
 ]
