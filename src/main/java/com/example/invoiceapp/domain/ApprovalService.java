@@ -3,12 +3,12 @@ package com.example.invoiceapp.domain;
 import java.time.Instant;
 
 /**
- * Moves an invoice through its lifecycle: DRAFT -> PENDING_APPROVAL -> APPROVED or REJECTED.
- * One invoice at a time, decided as a whole by a single approver.
+ * Moves invoices through their lifecycle. Approval checks and mutations are serialized.
  */
 public class ApprovalService {
 
     private final InvoiceRepository repository;
+    private final Object approvalLock = new Object();
 
     public ApprovalService(InvoiceRepository repository) {
         this.repository = repository;
@@ -27,15 +27,21 @@ public class ApprovalService {
         return invoice;
     }
 
-    public Invoice approve(String invoiceId, String approver) {
-        Invoice invoice = find(invoiceId);
-        ensurePending(invoice);
+    public Invoice approve(String invoiceId, Approver approver) {
+        synchronized (approvalLock) {
+            Invoice invoice = find(invoiceId);
+            ensurePending(invoice);
+            ApprovalPolicy.ensureMayApprove(invoiceId, invoice.getAmount(), approver);
 
-        invoice.setStatus(InvoiceStatus.APPROVED);
-        invoice.setDecidedBy(approver);
-        invoice.setDecidedAt(Instant.now());
-        repository.update(invoice);
-        return invoice;
+            String username = approver.username().strip();
+            Instant approvedAt = Instant.now();
+            invoice.addApproval(new ApprovalRecord(username, approver.role().label(), approvedAt));
+            invoice.setStatus(InvoiceStatus.APPROVED);
+            invoice.setDecidedBy(username);
+            invoice.setDecidedAt(approvedAt);
+            repository.update(invoice);
+            return invoice;
+        }
     }
 
     public Invoice reject(String invoiceId, String approver, String reason) {

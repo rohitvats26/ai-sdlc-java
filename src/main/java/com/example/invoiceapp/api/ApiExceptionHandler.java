@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.invoiceapp.domain.InvalidInvoiceStateException;
 import com.example.invoiceapp.domain.InvoiceNotFoundException;
+import com.example.invoiceapp.domain.ApprovalRejectedException;
 
 /** Maps domain failures to HTTP status codes with a JSON body { "error": message }. */
 @RestControllerAdvice
@@ -23,6 +24,11 @@ public class ApiExceptionHandler {
     @ExceptionHandler(InvalidInvoiceStateException.class)
     public ResponseEntity<Map<String, String>> conflict(InvalidInvoiceStateException ex) {
         return body(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(ApprovalRejectedException.class)
+    public ResponseEntity<Map<String, String>> approvalRejected(ApprovalRejectedException ex) {
+        return body(HttpStatus.FORBIDDEN, ex.getMessage());
     }
 
     @ExceptionHandler({IllegalArgumentException.class, HttpMessageNotReadableException.class})

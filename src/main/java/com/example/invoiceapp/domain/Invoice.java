@@ -2,6 +2,8 @@ package com.example.invoiceapp.domain;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Invoice {
     private String id = "";
@@ -12,6 +14,7 @@ public class Invoice {
     private String decidedBy;
     private Instant decidedAt;
     private String decisionNote;
+    private final List<ApprovalRecord> approvals = new ArrayList<>();
 
     public Invoice() {
     }
@@ -39,4 +42,9 @@ public class Invoice {
     public void setDecidedAt(Instant decidedAt) { this.decidedAt = decidedAt; }
     public String getDecisionNote() { return decisionNote; }
     public void setDecisionNote(String decisionNote) { this.decisionNote = decisionNote; }
+    public List<ApprovalRecord> getApprovals() { return List.copyOf(approvals); }
+
+    public void addApproval(ApprovalRecord approval) {
+        approvals.add(approval);
+    }
 }

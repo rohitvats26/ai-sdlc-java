@@ -54,4 +54,23 @@ class InvoiceApiTest {
                         .header("Authorization", "Bearer " + tokenFor("demo.approver")))
                 .andExpect(status().isForbidden());
     }
+
+    @Test
+    void managerCanApproveWithinTheirLimit() throws Exception {
+        mvc.perform(post("/api/approvals/INV-1001/approve")
+                        .header("Authorization", "Bearer " + tokenFor("demo.manager")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("Approved"))
+                .andExpect(jsonPath("$.decidedBy").value("demo.manager"))
+                .andExpect(jsonPath("$.approvals[0].role").value("Manager"));
+    }
+
+    @Test
+    void legacyApproverGetsStructuredApprovalRefusal() throws Exception {
+        mvc.perform(post("/api/approvals/INV-1002/approve")
+                        .header("Authorization", "Bearer " + tokenFor("demo.approver")))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.error").value(org.hamcrest.Matchers.containsString("Manager or Director")))
+                .andExpect(jsonPath("$.error").value(org.hamcrest.Matchers.containsString("INV-1002")));
+    }
 }

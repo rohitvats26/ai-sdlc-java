@@ -15,11 +15,11 @@ All demo accounts use the password `ChangeMe123!`. These are local demo credenti
 
 | Username | Role | What it can do | Available |
 | --- | --- | --- | --- |
-| `demo.approver` | Approver | Approve and reject invoices (no limit, until the limits are added) | Baseline |
-| `demo.admin` | Admin | Approve, reject and delete invoices | Baseline |
-| `demo.manager` | Manager | Approve invoices up to 50,000 | Added in step 2 (`2-single-approver`) |
-| `demo.director` | Director | Approve invoices up to 500,000; give an approval above 500,000 | Added in step 2 (`2-single-approver`) |
-| `demo.director2` | Director | Second approver above 500,000 | Added in step 2 (`2-single-approver`) |
+| `demo.approver` | Approver | Reject invoices; cannot approve under the role limits | Baseline |
+| `demo.admin` | Admin | Reject and delete invoices; cannot approve under the role limits | Baseline |
+| `demo.manager` | Manager | Approve invoices up to 50,000 | Step 2 |
+| `demo.director` | Director | Approve invoices up to 500,000 | Step 2 |
+| `demo.director2` | Director | Approve invoices up to 500,000 | Step 2 |
 
 Keep this table in step with `application.yml`: if you add, rename or remove an account, update it in the same commit.
 
@@ -27,9 +27,9 @@ Keep this table in step with `application.yml`: if you add, rename or remove an 
 
 Create an invoice, submit it for approval, then an approver approves it or rejects it with a reason. Invoices move Draft, Pending Approval, then Approved or Rejected.
 
-## Approval limits by role (the feature)
+## Approval limits
 
-Built in steps 2 and 3. Amounts use `BigDecimal` and are compared exactly.
+Amounts use `BigDecimal` and are compared exactly.
 
 | Invoice amount | Who may approve | Approvals needed |
 | --- | --- | --- |
@@ -37,11 +37,9 @@ Built in steps 2 and 3. Amounts use `BigDecimal` and are compared exactly.
 | above 50,000, up to and including 500,000 | Director only | 1 |
 | above 500,000 | two different users; the second must be a Director | 2 |
 
-- The same user never counts twice (case and surrounding spaces are ignored).
-- A refused attempt returns a clear reason (HTTP 403 with `{ "error": ... }`) and changes nothing on the invoice.
-- The invoices table shows approvals recorded out of required, for example `1 of 2`.
+- In step 2, amounts above 500,000 are refused until the two-Director approval flow is added in step 3.
+- A refused approval returns a clear reason (HTTP 403 with `{ "error": ... }`) and changes nothing on the invoice.
 
-Before the feature is built, the app still approves any invoice for any Approver or Admin.
 
 ## Tests
 
