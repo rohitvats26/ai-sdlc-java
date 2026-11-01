@@ -6,9 +6,11 @@
                                               in a temporary worktree: use this if step 4 was already done
   python scripts/pit.py after                 run PIT now, save docs/mutation/after/ and after.txt
   python scripts/pit.py show                  print the saved scores
+  python scripts/pit.py sync                  rewrite the ASSIGNMENT.md block from the saved reports (no PIT run)
+  python scripts/pit.py check                 exit 1 unless ASSIGNMENT.md shows both scores and they match the saved reports
 
-Each run also updates the table in docs/mutation-testing.md and writes the before and after scores as text into
-ASSIGNMENT.md (both between the pit:begin and pit:end markers).
+Each run also updates the table in docs/mutation-testing.md and writes the before and after scores (a table, the change,
+and plain text) into the "Mutation scores" section of ASSIGNMENT.md (both between the pit:begin and pit:end markers).
 "before" must be saved first and is never overwritten (use --force to redo it). The command is
 `mvn -B -q test-compile org.pitest:pitest-maven:mutationCoverage`; override with the PIT_CMD environment variable.
 """
@@ -133,27 +135,76 @@ def update_doc():
     update_assignment(data)
 
 
-def update_assignment(data=None):
-    """Write the before and after scores as plain text into ASSIGNMENT.md (required by the assignment)."""
+def assignment_block(data=None):
+    """The text that belongs between the pit markers in ASSIGNMENT.md: before, after and the change."""
     data = data or summaries()
+    (b, bmeta), (a, ameta) = data["before"], data["after"]
+
+    def row(label, m, meta):
+        if not m:
+            return f"| {label} | NOT GENERATED | | | | |"
+        return (f"| {label} | {m['detected']} of {m['total']} | **{m['percent']} percent** | {m['counts']['SURVIVED']} | "
+                f"{m['counts']['NO_COVERAGE']} | {meta.split(', saved')[0]} |")
+
+    table = ["| Run | Mutants killed | Score | Survived | Not covered | Commit |", "| --- | --- | --- | --- | --- | --- |",
+             row("Before", b, bmeta), row("After", a, ameta)]
+    if b and a:
+        gain = round(a["percent"] - b["percent"], 1)
+        change = (f"Change: {gain:+.1f} percentage points ({b['percent']} -> {a['percent']} percent), "
+                  f"{a['detected'] - b['detected']:+d} mutants killed, {a['counts']['SURVIVED'] - b['counts']['SURVIVED']:+d} survived")
+        table.append(f"| **Change** | {a['detected'] - b['detected']:+d} | **{gain:+.1f} points** | "
+                     f"{a['counts']['SURVIVED'] - b['counts']['SURVIVED']:+d} | {a['counts']['NO_COVERAGE'] - b['counts']['NO_COVERAGE']:+d} | |")
+    else:
+        change = "Change: not available until both Before and After are generated"
     lines = []
-    for label, (m, meta) in data.items():
+    for label, (m, meta) in (("before", (b, bmeta)), ("after", (a, ameta))):
         head = f"{label.capitalize()}:" + (" " if label == "before" else "  ")
         lines.append(f"{head}{m['detected']} of {m['total']} mutants killed = {m['percent']} percent "
                      f"({m['counts']['SURVIVED']} survived, {m['counts']['NO_COVERAGE']} not covered by any test) [commit {meta}]" if m
                      else f"{head}NOT GENERATED yet. Run: python scripts/pit.py {label}")
-    block = "\n".join([BEGIN, "", "```text", f"Tool: PIT (pitest-maven {pom_version()}), default mutators, classes in the domain package, run by scripts/pit.py"] + lines +
-                      ["```", "", "Reports and surviving-mutant lists: `docs/mutation/` (see also `docs/mutation-testing.md`). This block is written by `scripts/pit.py`; do not retype it.", "", END])
-    replace_block(ASSIGNMENT, "## Mutation scores (text)", block, "")
+    return "\n".join([BEGIN, ""] + table + ["", "```text", f"Tool: PIT (pitest-maven {pom_version()}), default mutators, classes in the domain package, run by scripts/pit.py"]
+                     + lines + [change, "```", "",
+                                "Reports and surviving-mutant lists: `docs/mutation/` (see also `docs/mutation-testing.md`). "
+                                "This block is written by `scripts/pit.py`; do not retype it.", "", END])
+
+
+def update_assignment(data=None):
+    """Write the before and after scores into ASSIGNMENT.md (required by the assignment)."""
+    replace_block(ASSIGNMENT, "## Mutation scores (text)", assignment_block(data), "")
+
+
+def check_assignment():
+    """True when ASSIGNMENT.md holds both generated scores and they equal what the saved reports say."""
+    data = summaries()
+    missing = [label for label, (m, _meta) in data.items() if not m]
+    if missing:
+        print("not ready: no saved report for " + " and ".join(missing) + ". Run: " + "; ".join(f"python scripts/pit.py {m}" for m in missing))
+        return False
+    text = open(ASSIGNMENT, encoding="utf-8").read() if os.path.exists(ASSIGNMENT) else ""
+    if BEGIN not in text or END not in text:
+        print(f"{ASSIGNMENT}: pit:begin / pit:end markers are missing. Run: python scripts/pit.py sync")
+        return False
+    current = text[text.index(BEGIN):text.index(END) + len(END)]
+    if current != assignment_block(data):
+        print(f"{ASSIGNMENT}: the Mutation scores block does not match the saved reports. Run: python scripts/pit.py sync")
+        return False
+    print(f"{ASSIGNMENT}: Mutation scores block shows Before and After and matches docs/mutation/")
+    return True
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("label", choices=["before", "after", "show"])
+    ap.add_argument("label", choices=["before", "after", "show", "sync", "check"])
     ap.add_argument("--at", metavar="COMMIT", help="run on this earlier commit in a temporary worktree (before only)")
     ap.add_argument("--force", action="store_true", help="overwrite an existing 'before', or run 'after' without a 'before'")
     args = ap.parse_args()
 
+    if args.label == "sync":
+        update_doc()
+        print(f"updated {ASSIGNMENT} and {DOC} from docs/mutation/")
+        return
+    if args.label == "check":
+        sys.exit(0 if check_assignment() else 1)
     if args.label == "show":
         for label in ("before", "after"):
             path = os.path.join(OUT, f"{label}.txt")

@@ -8,7 +8,7 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:5000',
     trace: 'on-first-retry',
-    headless: false,
+    headless: true, // step 5 (5-e2e-ui) switches this to false when it finishes: python scripts/e2e_headless.py false
     launchOptions: {
       slowMo: 1000,
     },

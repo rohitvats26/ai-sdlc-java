@@ -16,7 +16,7 @@ description: How to write the Playwright end-to-end tests for this app (page obj
 3. **Two approvers.** 600,000: first Director approves ("1 of 2"), the same Director again is refused, a second Director completes it ("2 of 2").
 
 ## Config rules
-`e2e/playwright.config.ts` uses `headless: false` and `slowMo: 1000` on purpose (visible, recordable). Do not add `waitForTimeout`; rely on auto-waiting and `expect(...).toBeVisible()`. The human runs one test with `npx playwright test -g "refused"`.
+`e2e/playwright.config.ts` is `headless: true` while Copilot works on step 5. When the `5-e2e-ui` prompt finishes it runs `python scripts/e2e_headless.py false`, so the human's run and the demo use a visible browser (`slowMo: 1000` stays, recordable). Do not add `waitForTimeout`; rely on auto-waiting and `expect(...).toBeVisible()`. The human runs one test with `npx playwright test -g "refused"`.
 
 ## UI contract the tests rely on
 Keep element ids and accessible names stable: the Approvals column ("recorded of required"), the alert that shows the refusal reason, the Approve and Submit buttons named by invoice id.

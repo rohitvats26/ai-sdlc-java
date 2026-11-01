@@ -12,7 +12,7 @@ Goal: an honest write-up. Every claim needs evidence.
 
 ## Do
 - Fill the traceability table in `ASSIGNMENT.md`: for each requirement, what was built, the evidence (file path, commit hash or command output) and a status (Completed, Partially completed, Not completed, Pending).
-- Do not retype the PIT scores: the "Mutation scores" block in `ASSIGNMENT.md` is written by `python scripts/pit.py`. Check that it shows both a Before and an After score and matches `python scripts/pit.py show`. If either says NOT GENERATED, tell me which command to run; do not fill it in yourself.
+- Do not retype the PIT scores: the "Mutation scores" block in `ASSIGNMENT.md` is written by `python scripts/pit.py`. Run `python scripts/pit.py check`: it must pass (both a Before and an After score, matching `docs/mutation/`). If it fails or either says NOT GENERATED, tell me which command to run (`before`, `after` or `sync`); do not fill it in yourself.
 - Write `docs/PULL_REQUEST.md`: summary, business-rule coverage, test results, mutation scores, AI tools used (from the AI log), the review findings table with verdicts, known limits and open assumptions.
 - Check `README.md` against the code (accounts and roles match `application.yml`, rules match what was built, test commands work) and fix any mismatch.
 

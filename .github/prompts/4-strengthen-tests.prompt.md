@@ -18,6 +18,7 @@ Steps 2 and 3 are committed and `mvn test` is green (PIT needs green tests). Do 
 2. Read `docs/mutation/before.txt` and the tests. Give a table of weak tests: name, what is weak (exception type only, no unchanged-state check, no message check, missing boundary), what to add.
 3. For each surviving mutant add the missing assertion or test. If a mutant is equivalent (cannot change behaviour), say so and skip it; do not chase 100 percent.
 4. Run `python scripts/pit.py after`. It saves `docs/mutation/after/` and `after.txt`, updates the table in `docs/mutation-testing.md` and writes both scores as text into `ASSIGNMENT.md`.
+5. Run `python scripts/pit.py check`. It must say the "Mutation scores" block in `ASSIGNMENT.md` shows Before and After and matches `docs/mutation/`. If it does not, run `python scripts/pit.py sync` and check again.
 
 ## Rules
 - Never type, estimate or copy a score by hand: only `pit.py` writes them.
@@ -25,7 +26,7 @@ Steps 2 and 3 are committed and `mvn test` is green (PIT needs green tests). Do 
 - If `pit.py` says "before already exists", do not use `--force`: tell me.
 
 ## Done when
-`mvn test` passes; `docs/mutation/before.txt`, `docs/mutation/after.txt` exist and the "Mutation scores" block in `ASSIGNMENT.md` shows both scores. Reply: both scores (copied from the script output), mutants killed per new test, mutants still alive and why.
+`mvn test` passes; `docs/mutation/before.txt`, `docs/mutation/after.txt` exist and the "Mutation scores" block in `ASSIGNMENT.md` shows both scores (Before, After and the change) and `python scripts/pit.py check` passes. Reply: both scores (copied from the script output), mutants killed per new test, mutants still alive and why.
 
 ## Finish (in this order; details in "Finish protocol" in `.github/copilot-instructions.md`)
 1. Log: `python scripts/ai_log.py add --prompt-ref 4-strengthen-tests --action "<one per real thing you did>" --tool-used "<only tools that ran>" --run-tests "mvn -q test" --command-run "python scripts/pit.py before" --command-run "python scripts/pit.py after"`

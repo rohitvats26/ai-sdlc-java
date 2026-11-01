@@ -12,7 +12,9 @@ One JSON object per line in docs/ai-log/ai-log.jsonl. Commands:
   import-chat  turn a Copilot Chat export (JSON) into entries, one per request (best effort)
   validate     check the log: required fields, allowed values, evidence, honesty warnings
   show         print one entry as a readable card (default: the latest)
-  render       write docs/ai-interaction-log.md (at a glance, timeline, one card per interaction)
+  render       write docs/ai-interaction-log.md (at a glance, timeline, one card per interaction) and
+               docs/ai-log/ai-log.pretty.json (same data, indented). add, annotate, import-chat and
+               auto-commit run it for you, so both readable files are always current (AI_LOG_RENDER=0 turns it off)
 
 Only log what really happened. Fields you cannot know are left empty rather than invented.
 Run `python3 scripts/ai_log.py <command> --help` for options.
@@ -23,6 +25,7 @@ import xml.etree.ElementTree as ET
 LOG = os.path.join("docs", "ai-log", "ai-log.jsonl")
 SUMMARY = os.path.join("docs", "ai-interaction-log.md")
 HEADER = os.path.join("docs", "ai-log", "HEADER.md")
+PRETTY_JSON = os.path.join("docs", "ai-log", "ai-log.pretty.json")
 SCHEMA_VERSION = 2
 
 MODES = {"ask", "plan", "agent", "edit", "n/a"}
@@ -409,6 +412,7 @@ def add_common(p, required):
 def cmd_add(args):
     entry = new_entry(args)
     append(entry)
+    auto_render()
     print("logged", entry["id"])
 
 
@@ -438,6 +442,7 @@ def cmd_annotate(args):
     if args.run_tests or args.command_run or args.since:
         row["execution_evidence"] = evidence(args)
     write_log(rows)
+    auto_render()
     print("annotated", row["id"])
 
 
@@ -504,6 +509,7 @@ def cmd_auto_commit(_args):
         "status": "info", "outcome": "successful", "artifacts": [],
     }
     append(entry)
+    auto_render()
     print("logged", entry["id"])
 
 
@@ -569,6 +575,7 @@ def cmd_import_chat(args):
         entry["id"] = f"{stamp.strftime('%Y%m%dT%H%M%SZ')}-{slug(agent_name)}-{slug(entry['request'])}-{count + 1}"
         append(entry)
         count += 1
+    auto_render()
     print(f"imported {count} requests from {args.file}; now run 'annotate' on each with what you changed and checked")
 
 
@@ -655,14 +662,17 @@ def names(seq):
 
 
 def prompt_lines(r):
+    """Every prompt in full. A slash prompt shows its file name, with the file text folded away."""
     out = []
     for p in r["prompts"]:
         label = "Prompt" if p["kind"] == "initial" else "Follow-up"
-        text = p["text"]
         if p.get("prompt_file"):
-            text = f"{p['text']}  ({p['prompt_file']})"
-        out.append(f"> **{label}:** {one_line(text, 300)}")
-    return out or ["> (no prompt recorded)"]
+            out += [f"**{label} {p['seq']}:** `{p['text']}` (from `{p['prompt_file']}`)", "",
+                    "<details><summary>Show the full prompt text</summary>", "", "~~~~text",
+                    p.get("prompt_file_text", "").rstrip(), "~~~~", "", "</details>", ""]
+        else:
+            out += [f"**{label} {p['seq']}:**", ""] + [f"> {line}" if line.strip() else ">" for line in p["text"].strip().splitlines()] + [""]
+    return out or ["_(no prompt recorded)_", ""]
 
 
 def evidence_lines(ev):
@@ -697,7 +707,7 @@ def card(n, r):
            f"| **Agent** | {r['agent_name']} ({r['agent_type']}) |",
            f"| **Skills · sub-agents · MCP** | {skills} · {subs} · {mcp} |",
            f"| **Result** | {r['status'].replace('_', ' ')} → {r['outcome'].replace('_', ' ')} |", ""]
-    out += prompt_lines(r) + [""]
+    out += prompt_lines(r)
     if r["custom_instructions_followed"]:
         out += ["**Instructions followed:** " + ", ".join(f"`{x}`" for x in r["custom_instructions_followed"]), ""]
     if r["ai_actions"]:
@@ -719,8 +729,17 @@ def card(n, r):
     return out + [""]
 
 
-def cmd_render(_args):
+def write_pretty_json(rows):
+    """The same entries as a normal indented JSON array, for reading in an editor."""
+    with open(PRETTY_JSON, "w", encoding="utf-8", newline="\n") as handle:
+        json.dump(rows, handle, indent=2, ensure_ascii=False)
+        handle.write("\n")
+
+
+def render_files():
     rows = read_log()
+    os.makedirs(os.path.dirname(PRETTY_JSON), exist_ok=True)
+    write_pretty_json(rows)
     manual = [r for r in rows if r.get("source") != "git-hook"]
     hooks = [r for r in rows if r.get("source") == "git-hook"]
     head = open(HEADER, encoding="utf-8").read().rstrip() if os.path.exists(HEADER) else "# AI interaction log"
@@ -756,7 +775,21 @@ def cmd_render(_args):
         out.append("")
     with open(SUMMARY, "w", encoding="utf-8", newline="\n") as handle:
         handle.write("\n".join(out) + "\n")
-    print(f"rendered {len(rows)} entries -> {SUMMARY}")
+    return len(rows)
+
+
+def cmd_render(_args):
+    print(f"rendered {render_files()} entries -> {SUMMARY} and {PRETTY_JSON}")
+
+
+def auto_render():
+    """Keep the readable files in step with the JSONL after every write. Never blocks the command."""
+    if os.environ.get("AI_LOG_RENDER") == "0":
+        return
+    try:
+        render_files()
+    except Exception as exc:  # the JSONL is the source of truth; a render problem must not lose an entry
+        print(f"warning: could not refresh {SUMMARY}: {exc}", file=sys.stderr)
 
 
 def cmd_show(args):

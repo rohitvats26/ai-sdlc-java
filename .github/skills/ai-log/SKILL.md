@@ -19,6 +19,7 @@ One entry per prompt, written right after that prompt finishes. Log file: `docs/
 - Never invent a prompt, tool, skill or result. Copy prompts word for word. Do not edit `docs/ai-log/` by hand.
 - Leave human fields empty: they record the human's review and corrections.
 - Entries start as `partially_completed`; only the human sets `successful` after checking.
+- `docs/ai-interaction-log.md` (readable) and `docs/ai-log/ai-log.pretty.json` (indented) are rebuilt automatically after every `add`/`annotate`; never edit them.
 
 ## If the commit is blocked
 "No AI log entry since the last commit": log the prompt you just ran, then commit again. `AI_LOG_SKIP=1` only for a commit with no AI work.

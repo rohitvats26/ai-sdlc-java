@@ -1,6 +1,6 @@
 # AI log: format and how to fill it
 
-The log is `docs/ai-log/ai-log.jsonl` (one JSON object per line). `docs/ai-interaction-log.md` is generated from it. Goal: show **how well** AI was used and how **you** checked it, not how many prompts you sent.
+The log is `docs/ai-log/ai-log.jsonl` (one JSON object per line, the source of truth). Two readable copies are generated from it and rebuilt automatically after every `add`, `annotate`, `import-chat` and post-commit record: `docs/ai-interaction-log.md` (read this one: at a glance, timeline, a card per prompt with the full prompt text folded open or closed) and `docs/ai-log/ai-log.pretty.json` (the same entries as an indented JSON array). Never edit either by hand. Goal: show **how well** AI was used and how **you** checked it, not how many prompts you sent.
 
 ## The rule: one entry per prompt, written when that prompt finishes
 
@@ -25,7 +25,7 @@ Do not log at the end of the day or at the end of the project. Every prompt (and
 | `ai_log.py check-commit` | Used by the pre-commit hook: staged work needs a log entry since the last commit. |
 | `ai_log.py validate` | Check required fields, allowed values and honesty warnings. |
 | `ai_log.py show [n]` | Print one entry as a readable card in the terminal (the latest by default). |
-| `ai_log.py render` | Rebuild the readable page `docs/ai-interaction-log.md`: an "At a glance" table, a timeline, then one card per interaction (when, tool and model, prompt, what the AI did, my review, evidence) and a short list of commit records. |
+| `ai_log.py render` | Rebuild `docs/ai-log/ai-log.pretty.json` and the readable page `docs/ai-interaction-log.md` (normally automatic; `AI_LOG_RENDER=0` turns the automatic rebuild off): an "At a glance" table, a timeline, then one card per interaction (when, tool and model, prompt, what the AI did, my review, evidence) and a short list of commit records. |
 | `.githooks/post-commit` | Automatically adds an evidence-only record after every commit. |
 
 On Windows, use `python`, `py` or `python3`, whichever works. The git hooks pick one automatically.

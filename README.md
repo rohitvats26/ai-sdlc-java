@@ -49,10 +49,10 @@ Before the feature is built, the app still approves any invoice for any Approver
 mvn test                                   # unit and API tests
 cd e2e && npm install && npx playwright install chromium && npm test   # end-to-end (starts the app itself)
 python scripts/pit.py before    # mutation testing (PIT): run BEFORE strengthening tests, then:
-python scripts/pit.py after     # scores and reports are saved in docs/mutation/ (plain: mvn test-compile org.pitest:pitest-maven:mutationCoverage)
+python scripts/pit.py after     # scores and reports are saved in docs/mutation/ and written (before, after, change) into ASSIGNMENT.md; `python scripts/pit.py check` verifies it (plain: mvn test-compile org.pitest:pitest-maven:mutationCoverage)
 ```
 
-**End-to-end tests open a real browser window** and run slowly on purpose (`headless: false`, `slowMo: 1000`, one second per action), so you can watch and record them. They need a desktop session. To run one test only, use `npx playwright test -g "<part of the test title>"`. For a faster, invisible run (for example on a build server), temporarily set `headless: true` and remove `slowMo` in `e2e/playwright.config.ts`.
+**End-to-end tests open a real browser window** and run slowly on purpose (`headless: false`, `slowMo: 1000`, one second per action), so you can watch and record them. They need a desktop session. The config starts as `headless: true`; the `5-e2e-ui` prompt switches it to `false` when it finishes (`python scripts/e2e_headless.py false|true|show` flips it by hand). To run one test only, use `npx playwright test -g "<part of the test title>"`. For a faster, invisible run (for example on a build server), run `python scripts/e2e_headless.py true` and remove `slowMo` in `e2e/playwright.config.ts`.
 
 ## Layout
 
@@ -70,4 +70,4 @@ docs/                                         use cases, AI log, review findings
 
 ## Working on the approval-limits feature
 
-See [AGENTS.md](AGENTS.md) for the rules and [docs/copilot-runbook.md](docs/copilot-runbook.md) for the workflow with GitHub Copilot. AI usage is logged per prompt in `docs/ai-log/ai-log.jsonl` (readable summary: `docs/ai-interaction-log.md`).
+See [AGENTS.md](AGENTS.md) for the rules and [docs/copilot-runbook.md](docs/copilot-runbook.md) for the workflow with GitHub Copilot. AI usage is logged per prompt in `docs/ai-log/ai-log.jsonl` (readable summary: `docs/ai-interaction-log.md`; indented JSON: `docs/ai-log/ai-log.pretty.json`). Both readable files are rebuilt automatically after every `ai_log.py add` or `annotate`.
