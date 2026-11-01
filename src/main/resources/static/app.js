@@ -19,7 +19,11 @@
     const response = await fetch(`/api${path}`, { ...options, headers });
     if (response.status === 401 && session) { signOut(); throw new Error('Session expired.'); }
     const body = response.status === 204 ? null : await response.json().catch(() => null);
-    if (!response.ok) throw new Error((body && body.error) || `Request failed (${response.status})`);
+    if (!response.ok) {
+      const message = (body && body.error)
+        || (response.status === 403 ? 'You do not have permission to do that.' : `Request failed (${response.status})`);
+      throw new Error(message);
+    }
     return body;
   }
 
@@ -57,6 +61,7 @@
         el('td', {}, invoice.customerName),
         el('td', {}, money.format(invoice.amount)),
         el('td', { class: `status status-${invoice.status}` }, invoice.status.replace(/([a-z])([A-Z])/g, '$1 $2')),
+        el('td', {}, `${invoice.approvalsRecorded} of ${invoice.approvalsRequired}`),
         actions);
     }));
   }
@@ -68,12 +73,17 @@
       const approve = el('button', { type: 'button', 'aria-label': `Approve invoice ${invoice.id}` }, 'Approve');
       const reject = el('button', { type: 'button', class: 'danger', 'aria-label': `Reject invoice ${invoice.id}` }, 'Reject');
       const reason = el('input', { id: reasonId, 'aria-label': `Rejection reason for ${invoice.id}`, placeholder: 'Reason (required to reject)' });
+      const approvedBy = invoice.approvals.length
+        ? `Approved so far: ${invoice.approvals.map((approval) => approval.username).join(', ')}`
+        : 'No approvals recorded yet';
 
       approve.addEventListener('click', () => decide(`/approvals/${invoice.id}/approve`, {}));
       reject.addEventListener('click', () => decide(`/approvals/${invoice.id}/reject`, { reason: reason.value }));
 
       return el('li', {},
         el('span', {}, `${invoice.id} · ${invoice.customerName} · ${money.format(invoice.amount)}`),
+        el('span', { class: 'approval-progress' }, `${invoice.approvalsRecorded} of ${invoice.approvalsRequired}`),
+        el('span', { class: 'approval-history' }, approvedBy),
         el('span', {}, approve),
         el('div', { class: 'reject-row' }, reason, reject));
     }));
