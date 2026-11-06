@@ -8,7 +8,7 @@ Stack: Java 21 / Spring Boot 3. Spec tool: OpenSpec. AI tool: GitHub Copilot.
 
 | Description | Link |
 |---|---|
-| 🎥 Demo Video | https://drive.google.com/file/d/1h5ppywi3nC_m0GgfmvWi3NcAa7Gqc2fC/view?usp=sharing |
+| 🎥 Demo Video | https://drive.google.com/file/d/1Qs1--0KcXxGSZg9wz_BuqnoIlIFsqhra/view?usp=sharing |
 | 🔀 Pull Request | https://github.com/rohitvats26/ai-sdlc-java/pull/1 |
 
 ## Run
