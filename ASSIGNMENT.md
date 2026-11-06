@@ -1,25 +1,37 @@
 # AI in SDLC assignment: approval limits by role
 
-**Stack:** Java 17 / Spring Boot 3. **Spec tool:** OpenSpec. **AI tool:** GitHub Copilot (fill in plan and model).
-**Demo video:** `<link>`   **Pull request:** `<url>`
+**Stack:** Java 17 / Spring Boot 3. **Spec tool:** OpenSpec. **AI tool:** GitHub Copilot, gpt-4o-mini-2024-07-18 (from the AI log).
+**Demo video:** Pending   **Pull request:** Pending
 
 ## Write-up
 
-TODO: what you built, assumptions, what Copilot got wrong and how you corrected it.
+Implemented role-based invoice approval limits in the domain policy and service. Managers and Directors may approve invoices up to 50,000; only Directors may approve amounts above 50,000 through 500,000; amounts above 500,000 require two distinct Directors. The first approval leaves the invoice pending, and the second completes it. Approval identity is normalized by trimming surrounding whitespace and ignoring case. Refused approvals return HTTP 403 with an `error` reason and do not mutate the invoice.
+
+The design records the chosen safe assumptions: both high-value approvers must be Directors; legacy Approver and Admin roles do not gain approval authority; and missing, zero, or negative stored amounts are invalid. No behavior questions remain open in the spec.
+
+The README's high-value approval table was ambiguous about whether a Manager could approve first, despite the spec and code requiring two Directors. This write-up corrects the table. The review file has two human-dismissed findings; F-002's recorded dismissal rationale discusses API immutability rather than the README discrepancy, so that verdict rationale should be confirmed by the reviewer. The API refusal test does not assert immutability itself; domain service refusal tests do. Unit/API tests passed, while browser E2E tests were listed but not run. The AI log reports six interactions, no sub-agents, and no human annotations yet.
 
 ## Traceability
 
 | # | Requirement | Implementation | Evidence | Status |
 | --- | --- | --- | --- | --- |
-| 1 | AGENTS.md context | | | |
-| 2 | Skills | | | |
-| 3 | Hooks | | | |
-| 4 | Spec (OpenSpec) | | | |
-| 5 | Two implementation steps, own commits | | | |
-| 6 | Unit tests incl. negative rules; Playwright test | | | |
-| 7 | PR review with verdicts | | | |
-| 8 | AI interaction log | | | |
-| 9 | Multiple agents | | | |
+| 1 | AGENTS.md context | Approval limits, immutable refusals, domain layering, and verification expectations were followed. | `AGENTS.md`; `ApprovalPolicy.java`; commits `9f9c929`, `b20ef04` | Completed |
+| 2 | Skills | Approval, spec, testing, UI, review, and logging skills were used. | `docs/ai-interaction-log.md`; `docs/ai-log/ai-log.jsonl` | Completed |
+| 3 | Hooks | Hook and prompt-linter workflow is documented; the evidence output confirms the prompt linter and AI-log validation, but does not confirm each commit-hook invocation. | `docs/copilot-runbook.md`; `python scripts/evidence.py` | Partially completed |
+| 4 | Spec (OpenSpec) | Approval scenarios, boundaries, and assumptions were specified and strict validation passed. | `openspec/changes/add-approval-limits-by-role/`; `11994ba`; AI log records `openspec validate add-approval-limits-by-role --strict` | Completed |
+| 5 | Two implementation steps, own commits | Single-approver limits and two-approver flow were delivered in separate commits. | `9f9c929`, `b20ef04` | Completed |
+| 6 | Unit tests incl. negative rules; Playwright test | Unit/API suite passes; three Playwright tests exist and are discoverable, but browser runs remain for the human. | `60 passed` in Maven Surefire; `e2e/tests/approval-flow.spec.ts`; `npx playwright test --list` listed 3 tests | Partially completed |
+| 7 | PR review with verdicts | Both findings have human-set dismissed verdicts. F-002's recorded reason does not address the README inconsistency it reports. | `docs/review/findings.json`; commit `70a9662`; `python scripts/hooks/validate-findings.py --final docs/review/findings.json` | Partially completed |
+| 8 | AI interaction log | Six interactions are logged and validated; human annotation is not yet recorded. | `docs/ai-log/ai-log.jsonl`; `docs/ai-interaction-log.md`; `python scripts/evidence.py` | Partially completed |
+| 9 | Multiple agents | No sub-agents were used. | `docs/ai-interaction-log.md` | Not completed |
+
+## Verification and remaining work
+
+- `mvn -q test`: 60 passed, 0 failed, 0 errors, 0 skipped.
+- `python scripts/pit.py check`: passed. Before: 53/72 killed (73.6%); after: 72/72 (100.0%). The generated scores remain in the section below.
+- `python scripts/hooks/validate-findings.py --final docs/review/findings.json`: passed.
+- `npx playwright test --list` from `e2e`: 3 tests listed; E2E browser tests have not been run.
+- Demo video and pull request links are Pending. Approval history is in-memory and is lost when the app restarts.
 
 ## Mutation scores (text)
 
@@ -27,14 +39,15 @@ TODO: what you built, assumptions, what Copilot got wrong and how you corrected 
 
 | Run | Mutants killed | Score | Survived | Not covered | Commit |
 | --- | --- | --- | --- | --- | --- |
-| Before | NOT GENERATED | | | | |
-| After | NOT GENERATED | | | | |
+| Before | 53 of 72 | **73.6 percent** | 8 | 11 | b20ef04 |
+| After | 72 of 72 | **100.0 percent** | 0 | 0 | b20ef04 (uncommitted changes present) |
+| **Change** | +19 | **+26.4 points** | -8 | -11 | |
 
 ```text
 Tool: PIT (pitest-maven 1.17.0), default mutators, classes in the domain package, run by scripts/pit.py
-Before: NOT GENERATED yet. Run: python scripts/pit.py before
-After:  NOT GENERATED yet. Run: python scripts/pit.py after
-Change: not available until both Before and After are generated
+Before: 53 of 72 mutants killed = 73.6 percent (8 survived, 11 not covered by any test) [commit b20ef04, saved 2026-11-01 14:14]
+After:  72 of 72 mutants killed = 100.0 percent (0 survived, 0 not covered by any test) [commit b20ef04 (uncommitted changes present), saved 2026-11-01 14:16]
+Change: +26.4 percentage points (73.6 -> 100.0 percent), +19 mutants killed, -8 survived
 ```
 
 Reports and surviving-mutant lists: `docs/mutation/` (see also `docs/mutation-testing.md`). This block is written by `scripts/pit.py`; do not retype it.

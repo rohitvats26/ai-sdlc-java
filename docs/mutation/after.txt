@@ -1,0 +1,7 @@
+PIT after: 72 of 72 mutants killed = 100.0 percent
+survived: 0, not covered by any test: 0, timed out: 0, non-viable (ignored): 0
+commit: b20ef04 (uncommitted changes present)   saved: 2026-11-01 14:16
+formula: killed (incl. timed out) / all mutants except non-viable. The PIT HTML report (index.html in this folder) is authoritative.
+
+Mutants to kill with new tests (class.method:line, mutator, what changed):
+- none

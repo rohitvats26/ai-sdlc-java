@@ -1,0 +1,30 @@
+[
+  {
+    "id": "F-001",
+    "severity": "medium",
+    "file": "src/test/java/com/example/invoiceapp/api/InvoiceApiTest.java",
+    "line": 69,
+    "title": "API refusal test does not verify invoice immutability",
+    "description": "This API-level refusal test checks the 403 response and part of its error message, but never reloads INV-1002 to prove its status, amount, decision fields, and approval history are unchanged. Service tests cover immutability for domain refusals, but this test does not verify the HTTP request path preserves that contract.",
+    "suggested_fix": "Capture the invoice state before the request, fetch it again after the 403, and assert status, amount, decidedBy, decidedAt, decisionNote, and approvals are unchanged.",
+    "confidence": "high",
+    "unsure_about": "The underlying service validates before mutation, but this test does not verify that behavior through the API.",
+    "verdict": "dismissed",
+    "verdict_reason": "not required to test immutability at the API level; service tests already cover that behavior",
+    "resolution": ""
+  },
+  {
+    "id": "F-002",
+    "severity": "low",
+    "file": "README.md",
+    "line": 38,
+    "title": "Approval table implies a Manager may approve first above 500,000",
+    "description": "The table says 'two different users; the second must be a Director', which implies a Manager could provide the first approval. The chosen design and implementation require both approvals to be from Directors. A later bullet states the stricter rule, so the README contradicts itself.",
+    "suggested_fix": "Change the table entry to 'two distinct Directors' so it matches the design decision and implementation.",
+    "confidence": "high",
+    "unsure_about": "The explanatory bullet below the table clarifies the intended rule, but readers relying on the table may infer different authority.",
+    "verdict": "dismissed",
+    "verdict_reason": "not required to test immutability at the API level; service tests already cover that behavior",
+    "resolution": ""
+  }
+]

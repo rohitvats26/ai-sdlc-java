@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.invoiceapp.api.security.RequireRole;
 import com.example.invoiceapp.api.security.SessionAuthFilter;
+import com.example.invoiceapp.api.security.UserSession;
+import com.example.invoiceapp.domain.Approver;
+import com.example.invoiceapp.domain.ApproverRole;
 import com.example.invoiceapp.domain.ApprovalService;
 import com.example.invoiceapp.domain.Invoice;
 
@@ -15,7 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/approvals")
-@RequireRole({"Approver", "Admin"})
 public class ApprovalsController {
 
     public record RejectRequest(String reason) {
@@ -29,10 +31,12 @@ public class ApprovalsController {
 
     @PostMapping("/{invoiceId}/approve")
     public Invoice approve(@PathVariable String invoiceId, HttpServletRequest request) {
-        return approvals.approve(invoiceId, SessionAuthFilter.sessionOf(request).username());
+        UserSession session = SessionAuthFilter.sessionOf(request);
+        return approvals.approve(invoiceId, new Approver(session.username(), ApproverRole.from(session.role())));
     }
 
     @PostMapping("/{invoiceId}/reject")
+    @RequireRole({"Approver", "Admin"})
     public Invoice reject(@PathVariable String invoiceId, @RequestBody RejectRequest body, HttpServletRequest request) {
         return approvals.reject(invoiceId, SessionAuthFilter.sessionOf(request).username(), body.reason());
     }
